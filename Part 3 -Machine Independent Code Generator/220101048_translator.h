@@ -1,10 +1,11 @@
+#ifndef __220101048_TRANSLATOR_H__
+#define __220101048_TRANSLATOR_H__
+
 #include <iostream>
 #include <vector>
 #include <list>
 #include <string>
-
-#ifndef __31_A4_TRANSLATOR_H__
-#define __31_A4_TRANSLATOR_H__
+#include <bits/stdc++.h>
 
 using namespace std;
 

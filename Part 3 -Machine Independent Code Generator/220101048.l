@@ -151,7 +151,7 @@ RSHIFT                          ">>"
                                 }
 
 {INTEGER_CONSTANT}                  { yylval.int_value = atoi(yytext); return INTEGER_CONSTANT; }
-{CHARACTER_CONSTANT}                 { yylval.char_value = yytext; return CHARACTER_CONSTANT; }
+{CHARACTER_CONSTANT}                 { yylval.string_value = yytext; return CHARACTER_CONSTANT; }
 {STRING_LITERAL}                { yylval.string_value = yytext; return STRING_LITERAL; }
 
 
