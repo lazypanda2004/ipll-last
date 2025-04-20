@@ -2,7 +2,7 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include "220101048_translator.h"
-    #include "220101048.tab.h"
+    #include "y.tab.h"
 
 %}
 
@@ -57,8 +57,6 @@ LEFT_SQUARE_BRACKET 			"["
 RIGHT_SQUARE_BRACKET 			"]"
 LEFT_PARENTHESIS 			    "("
 RIGHT_PARENTHESIS 			    ")"
-LEFT_CURLY_BRACKET 			    "{"
-RIGHT_CURLY_BRACKET 			"}"
 
 QUESTION_MARK 			        "?"
 COLON 				            ":"
@@ -100,7 +98,7 @@ RSHIFT                          ">>"
 "else"                          {return ELSE;}
 "for"                           {return FOR;}
 "if"                            {return IF;}
-"int"                           {return INT;}
+"integer"                           {return INT;}
 "return"                        {return RETURN;}
 "void"                          {return VOID;}
 "float"                         {return FLOAT;}
@@ -163,7 +161,3 @@ RSHIFT                          ">>"
 
 
 %%
-int yywrap()
-{
-    return 1;
-}
