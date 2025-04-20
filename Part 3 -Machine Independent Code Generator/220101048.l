@@ -6,9 +6,6 @@
 
 %}
 
-%option yylineno
-%option noyywrap
-
 IDENTIFIER                      [a-zA-Z_][a-zA-Z0-9_]*
 
 
@@ -24,12 +21,12 @@ ESCAPE_SEQUENCE                 [\\][']|[\\]["]|[\\][?]|[\\][\\]|[\\][a]|[\\][b]
 
 C_CHAR                          [^'\n\\]|{ESCAPE_SEQUENCE}
 C_CHAR_SEQUENCE                 {C_CHAR}+
-CHARACTER_CONSTANT              [']{C_CHAR_SEQ}[']
+CHARACTER_CONSTANT              [']{C_CHAR_SEQUENCE}[']
 
 S_CHAR                          [^"\n\\]|{ESCAPE_SEQUENCE}
 S_CHAR_SEQUENCE                 {S_CHAR}+
 
-STRING_LITERAL                  ["]{S_CHAR_SEQ}["]|["]["]
+STRING_LITERAL                  ["]{S_CHAR_SEQUENCE}["]|["]["]
 FLOAT_CONST             {DIGIT}+"."{DIGIT}+([eE][+-]?{DIGIT}+)?
 
 
@@ -98,7 +95,7 @@ RSHIFT                          ">>"
 "else"                          {return ELSE;}
 "for"                           {return FOR;}
 "if"                            {return IF;}
-"integer"                           {return INT;}
+"integer"                       {return INT;}
 "return"                        {return RETURN;}
 "void"                          {return VOID;}
 "float"                         {return FLOAT;}
@@ -153,7 +150,7 @@ RSHIFT                          ">>"
 {INTEGER_CONSTANT}                  { yylval.int_value = atoi(yytext); return INTEGER_CONSTANT; }
 {CHARACTER_CONSTANT}                 { yylval.string_value = yytext; return CHARACTER_CONSTANT; }
 {STRING_LITERAL}                { yylval.string_value = yytext; return STRING_LITERAL; }
-
+{FLOAT_CONST}                    {yylval.floatVal = atof(yytext); return FLOAT_CONST;}
 
 {WS}                            {}
 "\n"                            {}
@@ -161,3 +158,8 @@ RSHIFT                          ">>"
 
 
 %%
+
+int yywrap()
+{
+    return 1;
+}

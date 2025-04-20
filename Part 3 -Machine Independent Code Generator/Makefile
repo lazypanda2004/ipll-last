@@ -1,4 +1,4 @@
-BASE=31_A4
+BASE=220101048
 
 output: translator testcase.nc
 	./translator < testcase.nc > output.txt
