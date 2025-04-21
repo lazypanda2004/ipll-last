@@ -526,8 +526,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "220101048.l"
-#line 2 "220101048.l"
+#line 1 "a9_220101048.l"
+#line 2 "a9_220101048.l"
     #include <stdio.h>
     #include <stdlib.h>
     #include <map>
@@ -671,7 +671,7 @@ int nextinstr();
 int getSize(symbolTableData *t);
 symbolTableInit *convertType(symbolTableInit *s, string t);
 
-    #include "220101048.tab.h"
+    #include "a9_220101048.tab.h"
 
 #line 677 "lex.yy.c"
 
@@ -894,7 +894,7 @@ YY_DECL
 		}
 
 	{
-#line 218 "220101048.l"
+#line 218 "a9_220101048.l"
 
 
 #line 901 "lex.yy.c"
@@ -956,260 +956,260 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 220 "220101048.l"
+#line 220 "a9_220101048.l"
 {BEGIN(SINGLE_COMMENT);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 221 "220101048.l"
+#line 221 "a9_220101048.l"
 {}
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 222 "220101048.l"
+#line 222 "a9_220101048.l"
 {BEGIN(INITIAL);}
 	YY_BREAK
 case YY_STATE_EOF(SINGLE_COMMENT):
-#line 223 "220101048.l"
+#line 223 "a9_220101048.l"
 {BEGIN(INITIAL);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 226 "220101048.l"
+#line 226 "a9_220101048.l"
 {BEGIN(MULTI_COMMENT);}
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 227 "220101048.l"
+#line 227 "a9_220101048.l"
 {}
 	YY_BREAK
 case 6:
 /* rule 6 can match eol */
 YY_RULE_SETUP
-#line 228 "220101048.l"
+#line 228 "a9_220101048.l"
 {}
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 229 "220101048.l"
+#line 229 "a9_220101048.l"
 {}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 230 "220101048.l"
+#line 230 "a9_220101048.l"
 {BEGIN(INITIAL);}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 234 "220101048.l"
+#line 234 "a9_220101048.l"
 {return CHAR;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 235 "220101048.l"
+#line 235 "a9_220101048.l"
 {return ELSE;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 236 "220101048.l"
+#line 236 "a9_220101048.l"
 {return FOR;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 237 "220101048.l"
+#line 237 "a9_220101048.l"
 {return IF;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 238 "220101048.l"
+#line 238 "a9_220101048.l"
 {return INT;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 239 "220101048.l"
+#line 239 "a9_220101048.l"
 {return RETURN;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 240 "220101048.l"
+#line 240 "a9_220101048.l"
 {return VOID;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 241 "220101048.l"
+#line 241 "a9_220101048.l"
 {return FLOAT;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 242 "220101048.l"
+#line 242 "a9_220101048.l"
 {return WHILE;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 243 "220101048.l"
+#line 243 "a9_220101048.l"
 {return DO;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 244 "220101048.l"
+#line 244 "a9_220101048.l"
 {return BEG;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 245 "220101048.l"
+#line 245 "a9_220101048.l"
 {return END;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 247 "220101048.l"
+#line 247 "a9_220101048.l"
 {return LEFT_SQUARE_BRACKET;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 248 "220101048.l"
+#line 248 "a9_220101048.l"
 {return RIGHT_SQUARE_BRACKET;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 249 "220101048.l"
+#line 249 "a9_220101048.l"
 {return LEFT_PARENTHESIS;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 250 "220101048.l"
+#line 250 "a9_220101048.l"
 {return RIGHT_PARENTHESIS;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 252 "220101048.l"
+#line 252 "a9_220101048.l"
 {return ARROW;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 254 "220101048.l"
+#line 254 "a9_220101048.l"
 {return QUESTION_MARK;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 255 "220101048.l"
+#line 255 "a9_220101048.l"
 {return COLON;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 256 "220101048.l"
+#line 256 "a9_220101048.l"
 {return SEMICOLON;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 257 "220101048.l"
+#line 257 "a9_220101048.l"
 {return ASSIGN;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 258 "220101048.l"
+#line 258 "a9_220101048.l"
 {return COMMA;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 260 "220101048.l"
+#line 260 "a9_220101048.l"
 {return BITWISE_AND;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 261 "220101048.l"
+#line 261 "a9_220101048.l"
 {return BITWISE_OR;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 262 "220101048.l"
+#line 262 "a9_220101048.l"
 {return BITWISE_XOR;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 264 "220101048.l"
+#line 264 "a9_220101048.l"
 {return LOGICAL_AND;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 265 "220101048.l"
+#line 265 "a9_220101048.l"
 {return LOGICAL_OR;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 267 "220101048.l"
+#line 267 "a9_220101048.l"
 {return ADDITION;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 268 "220101048.l"
+#line 268 "a9_220101048.l"
 {return SUBTRACTION;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 269 "220101048.l"
+#line 269 "a9_220101048.l"
 {return MULTIPLICATION;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 270 "220101048.l"
+#line 270 "a9_220101048.l"
 {return DIVISION;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 271 "220101048.l"
+#line 271 "a9_220101048.l"
 {return MODULO;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 273 "220101048.l"
+#line 273 "a9_220101048.l"
 {return NOT;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 274 "220101048.l"
+#line 274 "a9_220101048.l"
 {return LESS_THAN;}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 275 "220101048.l"
+#line 275 "a9_220101048.l"
 {return GREATER_THAN;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 276 "220101048.l"
+#line 276 "a9_220101048.l"
 {return LESS_THAN_OR_EQUAL_TO;}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 277 "220101048.l"
+#line 277 "a9_220101048.l"
 {return GREATER_THAN_OR_EQUAL_TO;}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 278 "220101048.l"
+#line 278 "a9_220101048.l"
 {return EQUAL;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 279 "220101048.l"
+#line 279 "a9_220101048.l"
 {return NOT_EQUAL;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 281 "220101048.l"
+#line 281 "a9_220101048.l"
 {return LSHIFT;}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 282 "220101048.l"
+#line 282 "a9_220101048.l"
 {return RSHIFT;}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 285 "220101048.l"
+#line 285 "a9_220101048.l"
 {
                                     yylval.symptr = currentSymbolTable->lookup(yytext);
                                     return IDENTIFIER;
@@ -1217,33 +1217,33 @@ YY_RULE_SETUP
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 290 "220101048.l"
+#line 290 "a9_220101048.l"
 { yylval.int_value = atoi(yytext); return INTEGER_CONSTANT; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 291 "220101048.l"
+#line 291 "a9_220101048.l"
 { yylval.charVal = strdup(yytext); return CHARACTER_CONSTANT; }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 292 "220101048.l"
+#line 292 "a9_220101048.l"
 { yylval.string_value = strdup(yytext); return STRING_LITERAL; }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 293 "220101048.l"
+#line 293 "a9_220101048.l"
 {yylval.floatVal = atof(yytext); return FLOAT_CONST;}
 	YY_BREAK
 case 55:
 /* rule 55 can match eol */
 YY_RULE_SETUP
-#line 295 "220101048.l"
+#line 295 "a9_220101048.l"
 {}
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 299 "220101048.l"
+#line 299 "a9_220101048.l"
 ECHO;
 	YY_BREAK
 #line 1250 "lex.yy.c"
@@ -2252,7 +2252,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 299 "220101048.l"
+#line 299 "a9_220101048.l"
 
 
 int yywrap()

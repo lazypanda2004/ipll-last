@@ -142,7 +142,7 @@ int nextinstr();
 int getSize(symbolTableData *t);
 symbolTableInit *convertType(symbolTableInit *s, string t);
 
-    #include "220101048.tab.h"
+    #include "a9_220101048.tab.h"
 
 %}
 
