@@ -138,5 +138,7 @@ void replaceActiveSymbolTable(SymbolTable* new_table);
 int nextinstr();
 int getSize(symbolTableData* t);
 symbolTableInit* convertType(symbolTableInit* s, string t);
-
+string toString(int i);
+string toString(char c);
+string toString(float f);
 #endif

@@ -387,7 +387,7 @@ shift_expression
     }
     | shift_expression LSHIFT additive_expression
     {
-        if(typeCheck($1->STaddress, $3->STaddress)) {
+        if(typecheck($1->STaddress, $3->STaddress)) {
             $$ = new Expression();
             $$->STaddress = currentSymbolTable->gentemp(new symbolTableData($1->STaddress->symbolTableEntryType->type));
             emit("<<", $$->STaddress->name, $1->STaddress->name, $3->STaddress->name);
@@ -398,7 +398,7 @@ shift_expression
     }
     | shift_expression RSHIFT additive_expression
     {
-        if(typeCheck($1->STaddress, $3->STaddress)) {
+        if(typecheck($1->STaddress, $3->STaddress)) {
             $$ = new Expression();
             $$->STaddress = currentSymbolTable->gentemp(new symbolTableData($1->STaddress->symbolTableEntryType->type));
             emit(">>", $$->STaddress->name, $1->STaddress->name, $3->STaddress->name);
@@ -479,7 +479,7 @@ bitwise_AND_expression
     }
     | bitwise_AND_expression BITWISE_AND equality_expression
     {
-        if(typeCheck($1->STaddress, $3->STaddress)) {
+        if(typecheck($1->STaddress, $3->STaddress)) {
             $$ = new Expression();
             $$->STaddress = currentSymbolTable->gentemp(new symbolTableData($1->STaddress->symbolTableEntryType->type));
             emit("&", $$->STaddress->name, $1->STaddress->name, $3->STaddress->name);
@@ -497,7 +497,7 @@ bitwise_XOR_expression
     }
     | bitwise_XOR_expression BITWISE_XOR bitwise_AND_expression
     {
-        if(typeCheck($1->STaddress, $3->STaddress)) {
+        if(typecheck($1->STaddress, $3->STaddress)) {
             $$ = new Expression();
            $$->STaddress = currentSymbolTable->gentemp(new symbolTableData($1->STaddress->symbolTableEntryType->type));
             emit("^",$$->STaddress->name, $1->STaddress->name, $3->STaddress->name);
@@ -515,7 +515,7 @@ bitwise_OR_expression
     }
     | bitwise_OR_expression BITWISE_OR bitwise_XOR_expression
     {
-        if(typeCheck($1->STaddress, $3->STaddress)) {
+        if(typecheck($1->STaddress, $3->STaddress)) {
             $$ = new Expression();
             $$->STaddress = currentSymbolTable->gentemp(new symbolTableData($1->STaddress->symbolTableEntryType->type));
             emit("|",$$->STaddress->name, $1->STaddress->name, $3->STaddress->name);
@@ -875,9 +875,9 @@ loop_statement:
 
 change_block:
         {
-            string name = currentSymbolTable->identifier + "_" + toString(symbolTableCounter);
-            tableCount++;
-            symbolTableInit* s = currentSymbolTable->lookupSymbol(name); // create new entry in symbol table
+            string name = currentSymbolTable->name + "_" + to_string(symbolTableCounter);
+            symbolTableCounter++;
+            symbolTableInit* s = currentSymbolTable->lookup(name); // create new entry in symbol table
             s->nestedTable = new SymbolTable(name,"block",currentSymbolTable);
             s->type = new symbolTableData("block");
             currentSymbol = s;

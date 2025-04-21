@@ -1688,7 +1688,7 @@ yyreduce:
   case 30: /* shift_expression: shift_expression LSHIFT additive_expression  */
 #line 389 "220101048.y"
     {
-        if(typeCheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
+        if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
             (yyval.expr) = new Expression();
             (yyval.expr)->STaddress = currentSymbolTable->gentemp(new symbolTableData((yyvsp[-2].expr)->STaddress->symbolTableEntryType->type));
             emit("<<", (yyval.expr)->STaddress->name, (yyvsp[-2].expr)->STaddress->name, (yyvsp[0].expr)->STaddress->name);
@@ -1703,7 +1703,7 @@ yyreduce:
   case 31: /* shift_expression: shift_expression RSHIFT additive_expression  */
 #line 400 "220101048.y"
     {
-        if(typeCheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
+        if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
             (yyval.expr) = new Expression();
             (yyval.expr)->STaddress = currentSymbolTable->gentemp(new symbolTableData((yyvsp[-2].expr)->STaddress->symbolTableEntryType->type));
             emit(">>", (yyval.expr)->STaddress->name, (yyvsp[-2].expr)->STaddress->name, (yyvsp[0].expr)->STaddress->name);
@@ -1806,7 +1806,7 @@ yyreduce:
   case 38: /* bitwise_AND_expression: bitwise_AND_expression BITWISE_AND equality_expression  */
 #line 481 "220101048.y"
     {
-        if(typeCheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
+        if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
             (yyval.expr) = new Expression();
             (yyval.expr)->STaddress = currentSymbolTable->gentemp(new symbolTableData((yyvsp[-2].expr)->STaddress->symbolTableEntryType->type));
             emit("&", (yyval.expr)->STaddress->name, (yyvsp[-2].expr)->STaddress->name, (yyvsp[0].expr)->STaddress->name);
@@ -1829,7 +1829,7 @@ yyreduce:
   case 40: /* bitwise_XOR_expression: bitwise_XOR_expression BITWISE_XOR bitwise_AND_expression  */
 #line 499 "220101048.y"
     {
-        if(typeCheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
+        if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
             (yyval.expr) = new Expression();
            (yyval.expr)->STaddress = currentSymbolTable->gentemp(new symbolTableData((yyvsp[-2].expr)->STaddress->symbolTableEntryType->type));
             emit("^",(yyval.expr)->STaddress->name, (yyvsp[-2].expr)->STaddress->name, (yyvsp[0].expr)->STaddress->name);
@@ -1852,7 +1852,7 @@ yyreduce:
   case 42: /* bitwise_OR_expression: bitwise_OR_expression BITWISE_OR bitwise_XOR_expression  */
 #line 517 "220101048.y"
     {
-        if(typeCheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
+        if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
             (yyval.expr) = new Expression();
             (yyval.expr)->STaddress = currentSymbolTable->gentemp(new symbolTableData((yyvsp[-2].expr)->STaddress->symbolTableEntryType->type));
             emit("|",(yyval.expr)->STaddress->name, (yyvsp[-2].expr)->STaddress->name, (yyvsp[0].expr)->STaddress->name);
@@ -2330,9 +2330,9 @@ yyreduce:
   case 89: /* change_block: %empty  */
 #line 877 "220101048.y"
         {
-            string name = currentSymbolTable->identifier + "_" + toString(symbolTableCounter);
-            tableCount++;
-            symbolTableInit* s = currentSymbolTable->lookupSymbol(name); // create new entry in symbol table
+            string name = currentSymbolTable->name + "_" + to_string(symbolTableCounter);
+            symbolTableCounter++;
+            symbolTableInit* s = currentSymbolTable->lookup(name); // create new entry in symbol table
             s->nestedTable = new SymbolTable(name,"block",currentSymbolTable);
             s->type = new symbolTableData("block");
             currentSymbol = s;
