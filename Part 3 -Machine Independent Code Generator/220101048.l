@@ -2,7 +2,7 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include "220101048_translator.h"
-    #include "y.tab.h"
+    #include "220101048.tab.h"
 
 %}
 
@@ -31,22 +31,6 @@ FLOAT_CONST             {DIGIT}+"."{DIGIT}+([eE][+-]?{DIGIT}+)?
 
 
 WS                              [ \t\n]
-
-%x SINGLE_COMMENT MULTI_COMMENT
-
-%%
-
-"//"			            {BEGIN(SINGLE_COMMENT);}
-<SINGLE_COMMENT>[^\n]	    {}
-<SINGLE_COMMENT>"\n"		{BEGIN(INITIAL);}
-<SINGLE_COMMENT><<EOF>>	    {BEGIN(INITIAL);}
-
-
-"/*"			            {BEGIN(MULTI_COMMENT);}
-<MULTI_COMMENT>"\n"         {}
-<MULTI_COMMENT>[^*]	        {}
-<MULTI_COMMENT>"*"[^/]	    {}
-<MULTI_COMMENT>"*/"	        {BEGIN(INITIAL);}
 
 
 
@@ -89,7 +73,23 @@ NOTEQUAL 			            "!="
 LSHIFT 			                "<<"
 RSHIFT                          ">>"
 
+%x SINGLE_COMMENT MULTI_COMMENT
+
 %%
+
+"//"			            {BEGIN(SINGLE_COMMENT);}
+<SINGLE_COMMENT>[^\n]	    {}
+<SINGLE_COMMENT>"\n"		{BEGIN(INITIAL);}
+<SINGLE_COMMENT><<EOF>>	    {BEGIN(INITIAL);}
+
+
+"/*"			            {BEGIN(MULTI_COMMENT);}
+<MULTI_COMMENT>"\n"         {}
+<MULTI_COMMENT>[^*]	        {}
+<MULTI_COMMENT>"*"[^/]	    {}
+<MULTI_COMMENT>"*/"	        {BEGIN(INITIAL);}
+
+
 
 "char"                          {return CHAR;}
 "else"                          {return ELSE;}
@@ -148,8 +148,8 @@ RSHIFT                          ">>"
                                 }
 
 {INTEGER_CONSTANT}                  { yylval.int_value = atoi(yytext); return INTEGER_CONSTANT; }
-{CHARACTER_CONSTANT}                 { yylval.string_value = yytext; return CHARACTER_CONSTANT; }
-{STRING_LITERAL}                { yylval.string_value = yytext; return STRING_LITERAL; }
+{CHARACTER_CONSTANT}                 { yylval.charVal = strdup(yytext); return CHARACTER_CONSTANT; }
+{STRING_LITERAL}                { yylval.string_value = strdup(yytext); return STRING_LITERAL; }
 {FLOAT_CONST}                    {yylval.floatVal = atof(yytext); return FLOAT_CONST;}
 
 {WS}                            {}

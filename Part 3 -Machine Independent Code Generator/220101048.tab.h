@@ -61,39 +61,47 @@ extern int yydebug;
     INT = 262,                     /* INT  */
     RETURN = 263,                  /* RETURN  */
     VOID = 264,                    /* VOID  */
-    LEFT_SQUARE_BRACKET = 265,     /* LEFT_SQUARE_BRACKET  */
-    RIGHT_SQUARE_BRACKET = 266,    /* RIGHT_SQUARE_BRACKET  */
-    LEFT_PARENTHESIS = 267,        /* LEFT_PARENTHESIS  */
-    RIGHT_PARENTHESIS = 268,       /* RIGHT_PARENTHESIS  */
-    LEFT_CURLY_BRACKET = 269,      /* LEFT_CURLY_BRACKET  */
-    RIGHT_CURLY_BRACKET = 270,     /* RIGHT_CURLY_BRACKET  */
-    DOT = 271,                     /* DOT  */
-    ARROW = 272,                   /* ARROW  */
-    BITWISE_AND = 273,             /* BITWISE_AND  */
-    MULTIPLICATION = 274,          /* MULTIPLICATION  */
-    ADDITION = 275,                /* ADDITION  */
-    SUBTRACTION = 276,             /* SUBTRACTION  */
-    NOT = 277,                     /* NOT  */
-    DIVISION = 278,                /* DIVISION  */
-    MODULO = 279,                  /* MODULO  */
-    LESS_THAN = 280,               /* LESS_THAN  */
-    GREATER_THAN = 281,            /* GREATER_THAN  */
-    LESS_THAN_OR_EQUAL_TO = 282,   /* LESS_THAN_OR_EQUAL_TO  */
-    GREATER_THAN_OR_EQUAL_TO = 283, /* GREATER_THAN_OR_EQUAL_TO  */
-    EQUAL = 284,                   /* EQUAL  */
-    NOT_EQUAL = 285,               /* NOT_EQUAL  */
-    LOGICAL_AND = 286,             /* LOGICAL_AND  */
-    LOGICAL_OR = 287,              /* LOGICAL_OR  */
-    QUESTION_MARK = 288,           /* QUESTION_MARK  */
-    COLON = 289,                   /* COLON  */
-    SEMICOLON = 290,               /* SEMICOLON  */
-    ASSIGN = 291,                  /* ASSIGN  */
-    COMMA = 292,                   /* COMMA  */
-    IDENTIFIER = 293,              /* IDENTIFIER  */
-    INTEGER_CONSTANT = 294,        /* INTEGER_CONSTANT  */
-    CHARACTER_CONSTANT = 295,      /* CHARACTER_CONSTANT  */
-    STRING_LITERAL = 296,          /* STRING_LITERAL  */
-    THEN = 297                     /* THEN  */
+    WHILE = 265,                   /* WHILE  */
+    DO = 266,                      /* DO  */
+    FLOAT = 267,                   /* FLOAT  */
+    BEG = 268,                     /* BEG  */
+    END = 269,                     /* END  */
+    LEFT_SQUARE_BRACKET = 270,     /* LEFT_SQUARE_BRACKET  */
+    RIGHT_SQUARE_BRACKET = 271,    /* RIGHT_SQUARE_BRACKET  */
+    LEFT_PARENTHESIS = 272,        /* LEFT_PARENTHESIS  */
+    RIGHT_PARENTHESIS = 273,       /* RIGHT_PARENTHESIS  */
+    ARROW = 274,                   /* ARROW  */
+    BITWISE_AND = 275,             /* BITWISE_AND  */
+    BITWISE_OR = 276,              /* BITWISE_OR  */
+    BITWISE_XOR = 277,             /* BITWISE_XOR  */
+    MULTIPLICATION = 278,          /* MULTIPLICATION  */
+    ADDITION = 279,                /* ADDITION  */
+    SUBTRACTION = 280,             /* SUBTRACTION  */
+    NOT = 281,                     /* NOT  */
+    DIVISION = 282,                /* DIVISION  */
+    MODULO = 283,                  /* MODULO  */
+    LESS_THAN = 284,               /* LESS_THAN  */
+    GREATER_THAN = 285,            /* GREATER_THAN  */
+    LESS_THAN_OR_EQUAL_TO = 286,   /* LESS_THAN_OR_EQUAL_TO  */
+    GREATER_THAN_OR_EQUAL_TO = 287, /* GREATER_THAN_OR_EQUAL_TO  */
+    EQUAL = 288,                   /* EQUAL  */
+    NOT_EQUAL = 289,               /* NOT_EQUAL  */
+    LOGICAL_AND = 290,             /* LOGICAL_AND  */
+    LOGICAL_OR = 291,              /* LOGICAL_OR  */
+    QUESTION_MARK = 292,           /* QUESTION_MARK  */
+    COLON = 293,                   /* COLON  */
+    SEMICOLON = 294,               /* SEMICOLON  */
+    ASSIGN = 295,                  /* ASSIGN  */
+    COMMA = 296,                   /* COMMA  */
+    LSHIFT = 297,                  /* LSHIFT  */
+    RSHIFT = 298,                  /* RSHIFT  */
+    IFX = 299,                     /* IFX  */
+    IDENTIFIER = 300,              /* IDENTIFIER  */
+    INTEGER_CONSTANT = 301,        /* INTEGER_CONSTANT  */
+    CHARACTER_CONSTANT = 302,      /* CHARACTER_CONSTANT  */
+    STRING_LITERAL = 303,          /* STRING_LITERAL  */
+    FLOAT_CONST = 304,             /* FLOAT_CONST  */
+    THEN = 305                     /* THEN  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -105,7 +113,10 @@ union YYSTYPE
 #line 14 "220101048.y"
 
     int int_value;
+    float floatVal;
     char* string_value;
+    char* charVal;
+    char *unaryOperator;
     int instr;
     char unaryOp;
     int numParams;
@@ -115,7 +126,7 @@ union YYSTYPE
     symbolTableData* symType;
     Array* arr;
 
-#line 119 "220101048.tab.h"
+#line 130 "220101048.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

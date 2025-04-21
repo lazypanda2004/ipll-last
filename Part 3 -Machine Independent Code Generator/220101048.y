@@ -1,6 +1,6 @@
 %{
-#include <iostream>
-#include "31_A4_translator.h"
+#include <bits/stdc++.h>
+#include "220101048_translator.h"
 using namespace std;
 
 extern int yylex();
@@ -13,7 +13,10 @@ Expression* tmpForBool;
 
 %union {
     int int_value;
+    float floatVal;
     char* string_value;
+    char* charVal;
+    char *unaryOperator;
     int instr;
     char unaryOp;
     int numParams;
@@ -31,18 +34,22 @@ Expression* tmpForBool;
 %token INT
 %token RETURN
 %token VOID
+%token WHILE
+%token DO
+%token FLOAT
+%token BEG
+%token END
 
 %token LEFT_SQUARE_BRACKET
 %token RIGHT_SQUARE_BRACKET
 %token LEFT_PARENTHESIS
 %token RIGHT_PARENTHESIS
-%token LEFT_CURLY_BRACKET
-%token RIGHT_CURLY_BRACKET 
-
-%token DOT
 %token ARROW
 
 %token BITWISE_AND
+%token BITWISE_OR
+%token BITWISE_XOR
+
 %token MULTIPLICATION
 %token ADDITION
 %token SUBTRACTION
@@ -64,12 +71,17 @@ Expression* tmpForBool;
 %token SEMICOLON
 %token ASSIGN
 %token COMMA
+%token LSHIFT
+%token RSHIFT
+%token IFX
 
 %token <symptr> IDENTIFIER
 %token <int_value> INTEGER_CONSTANT
 %token <string_value> CHARACTER_CONSTANT
 %token <string_value> STRING_LITERAL
+%token<floatVal> FLOAT_CONST
 
+%nonassoc IFX
 %start translation_unit
 %right THEN ELSE
 %type <unaryOp> unary_operator
@@ -86,6 +98,10 @@ Expression* tmpForBool;
     conditional_expression
     assignment_expression
     expression_statement
+    shift_expression
+    bitwise_AND_expression
+    bitwise_OR_expression
+    bitwise_XOR_expression
 
 %type <stmt>
     statement
@@ -131,6 +147,11 @@ primary_expression:
         if ($2->type == "bool")
             tmpForBool = $2;
     }
+    | FLOAT_CONST
+     {
+        $$ = new Expression();
+        $$->STaddress = $1;
+    }
     ;
 
 constant: 
@@ -141,7 +162,7 @@ constant:
     }
     | CHARACTER_CONSTANT
     {
-        $$ = currentSymbolTable->gentemp(new symbolTableData("float"), string($1));
+        $$ = currentSymbolTable->gentemp(new symbolTableData("char"), string($1));
         emit("=", $$->name, string($1));
     }
     ;
@@ -188,8 +209,6 @@ postfix_expression:
         $$->array = currentSymbolTable->gentemp($1->type);
         emit("call", $$->array->name, $1->array->name, to_string($3));
     }
-    | postfix_expression DOT IDENTIFIER
-    {}
     | postfix_expression ARROW IDENTIFIER
     {}
     ;
@@ -361,13 +380,42 @@ additive_expression:
         }
         ;
 
+shift_expression
+    : additive_expression
+    {
+        $$ = $1;
+    }
+    | shift_expression LSHIFT additive_expression
+    {
+        if(typeCheck($1->STaddress, $3->STaddress)) {
+            $$ = new Expression();
+            $$->STaddress = currentSymbolTable->gentemp(new symbolTableData($1->STaddress->symbolTableEntryType->type));
+            emit("<<", $$->STaddress->name, $1->STaddress->name, $3->STaddress->name);
+        }
+        else {
+            yyerror("Type mismatch in shift expression");
+        }
+    }
+    | shift_expression RSHIFT additive_expression
+    {
+        if(typeCheck($1->STaddress, $3->STaddress)) {
+            $$ = new Expression();
+            $$->STaddress = currentSymbolTable->gentemp(new symbolTableData($1->STaddress->symbolTableEntryType->type));
+            emit(">>", $$->STaddress->name, $1->STaddress->name, $3->STaddress->name);
+        }
+        else {
+            yyerror("Type mismatch in shift expression");
+        }
+    }
+    ;
+
 
 relational_expression: 
-        additive_expression
+        shift_expression
         {
             $$ = $1;
         }
-        | relational_expression LESS_THAN additive_expression
+        | relational_expression LESS_THAN shift_expression
         {
             if(typecheck($1->STaddress, $3->STaddress)) {
                 $$ = new Expression();
@@ -381,7 +429,7 @@ relational_expression:
                 yyerror("Type Error");
             }
         }
-        | relational_expression GREATER_THAN additive_expression
+        | relational_expression GREATER_THAN shift_expression
         {
             if(typecheck($1->STaddress, $3->STaddress)) {
                 $$ = new Expression();
@@ -395,7 +443,7 @@ relational_expression:
                 yyerror("Type Error");
             }
         }
-        | relational_expression LESS_THAN_OR_EQUAL_TO additive_expression
+        | relational_expression LESS_THAN_OR_EQUAL_TO shift_expression
         {
             if(typecheck($1->STaddress, $3->STaddress)) {
                 $$ = new Expression();
@@ -409,7 +457,7 @@ relational_expression:
                 yyerror("Type Error");
             }
         }
-        | relational_expression GREATER_THAN_OR_EQUAL_TO additive_expression
+        | relational_expression GREATER_THAN_OR_EQUAL_TO shift_expression
         {
             if(typecheck($1->STaddress, $3->STaddress)) {
                 $$ = new Expression();
@@ -424,6 +472,59 @@ relational_expression:
             }
         }
         ;
+bitwise_AND_expression
+    : equality_expression
+    {
+        $$ = $1;
+    }
+    | bitwise_AND_expression BITWISE_AND equality_expression
+    {
+        if(typeCheck($1->STaddress, $3->STaddress)) {
+            $$ = new Expression();
+            $$->STaddress = currentSymbolTable->gentemp(new symbolTableData($1->STaddress->symbolTableEntryType->type));
+            emit("&", $$->STaddress->name, $1->STaddress->name, $3->STaddress->name);
+        }
+        else {
+            yyerror("Type error in bit AND operation");
+        }
+    }
+    ;
+
+bitwise_XOR_expression
+    : bitwise_AND_expression
+    {
+        $$ = $1;
+    }
+    | bitwise_XOR_expression BITWISE_XOR bitwise_AND_expression
+    {
+        if(typeCheck($1->STaddress, $3->STaddress)) {
+            $$ = new Expression();
+           $$->STaddress = currentSymbolTable->gentemp(new symbolTableData($1->STaddress->symbolTableEntryType->type));
+            emit("^",$$->STaddress->name, $1->STaddress->name, $3->STaddress->name);
+        }
+        else {
+            yyerror("Type error in bit XOR operation");
+        }
+    }
+    ;
+
+bitwise_OR_expression
+    : bitwise_XOR_expression
+    {
+        $$ = $1;
+    }
+    | bitwise_OR_expression BITWISE_OR bitwise_XOR_expression
+    {
+        if(typeCheck($1->STaddress, $3->STaddress)) {
+            $$ = new Expression();
+            $$->STaddress = currentSymbolTable->gentemp(new symbolTableData($1->STaddress->symbolTableEntryType->type));
+            emit("|",$$->STaddress->name, $1->STaddress->name, $3->STaddress->name);
+        }
+        else {
+            yyerror("Type error in bit OR operation");
+        }
+    }
+    ;
 
 equality_expression: 
         relational_expression
@@ -466,11 +567,11 @@ equality_expression:
 
 
 logical_and_expression: 
-        equality_expression
+        bitwise_OR_expression
         {
             $$ = $1;
         }
-        | logical_and_expression LOGICAL_AND A equality_expression
+        | logical_and_expression LOGICAL_AND A bitwise_OR_expression
         {
             intToBoolConversion($1);
             intToBoolConversion($4);
@@ -605,6 +706,10 @@ type_specifier:
         | INT
         {
             prevType = "int";
+        }
+        |FLOAT
+        {
+            prevType = "float";
         }
         ;
 
@@ -768,8 +873,19 @@ loop_statement:
         }
         ;
 
+change_block:
+        {
+            string name = currentSymbolTable->identifier + "_" + toString(symbolTableCounter);
+            tableCount++;
+            symbolTableInit* s = currentSymbolTable->lookupSymbol(name); // create new entry in symbol table
+            s->nestedTable = new SymbolTable(name,"block",currentSymbolTable);
+            s->type = new symbolTableData("block");
+            currentSymbol = s;
+        }
+        ;
+
 compound_statement: 
-        LEFT_CURLY_BRACKET NESTPARSER replaceActiveSymbolTableParse block_item_list_opt RIGHT_CURLY_BRACKET
+        BEG change_block replaceActiveSymbolTableParse block_item_list_opt END
         {
             $$ = $4;
             replaceActiveSymbolTable(currentSymbolTable->parent);
@@ -846,18 +962,6 @@ iteration_statement:
             currentBlock = "";
             replaceActiveSymbolTable(currentSymbolTable->parent);
         }
-        | FOR F LEFT_PARENTHESIS NESTPARSER replaceActiveSymbolTableParse expression_statement A expression_statement A expression B RIGHT_PARENTHESIS A LEFT_CURLY_BRACKET block_item_list_opt RIGHT_CURLY_BRACKET
-        {
-            $$ = new Statement();
-            intToBoolConversion($8);
-            backpatch($8->truelist, $13);
-            backpatch($11->nextlist, $7);
-            backpatch($15->nextlist, $9);
-            emit("goto", to_string($9));
-            $$->nextlist = $8->falselist;
-            currentBlock = "";
-            replaceActiveSymbolTable(currentSymbolTable->parent);
-        }
         ;
 
 F: %empty
@@ -919,7 +1023,7 @@ external_declaration:
         ;
 
 function_definition: 
-        type_specifier declarator declaration_list_opt replaceActiveSymbolTableParse LEFT_CURLY_BRACKET block_item_list_opt RIGHT_CURLY_BRACKET
+        type_specifier declarator declaration_list_opt replaceActiveSymbolTableParse BEG block_item_list_opt END
         {   
             currentSymbolTable->parent = globalSymbolTable;
             symbolTableCounter = 0;
