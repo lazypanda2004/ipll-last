@@ -532,12 +532,152 @@ char *yytext;
 #line 2 "220101048.l"
     #include <stdio.h>
     #include <stdlib.h>
-    #include "220101048_translator.h"
+    #include <map>
+#include <iomanip>
+#include <iostream>
+#include <vector>
+#include <list>
+#include <string>
+#include <bits/stdc++.h>
+using namespace std;
+
+#define _SIZE_VOID 0
+#define _SIZE_CHAR 1
+#define _SIZE_INT 4
+#define _SIZE_POINTER 4
+#define _SIZE_FUNCTION 0
+
+class symbolTableInit;
+class symbolTableData;
+class SymbolTable;
+class Quad;
+class quadArray;
+
+extern symbolTableInit *currentSymbol;
+extern SymbolTable *globalSymbolTable;
+extern SymbolTable *currentSymbolTable;
+extern quadArray quadrupleArray;
+extern int symbolTableCounter;
+extern string currentBlock;
+
+extern char *yytext;
+extern int yyparse();
+
+class symbolTableData
+{
+public:
+    string type;
+    int width;
+    symbolTableData *arrElementType;
+    symbolTableData(string type_, symbolTableData *arrElementType_ = NULL, int width_ = 1);
+};
+
+class symbolTableInit
+{
+public:
+    string name;
+    symbolTableData *symbolTableEntryType;
+    string val;
+    int size;
+    int offset;
+    SymbolTable *nestedTable;
+    symbolTableInit(string name_, string sym_type_ = "int", symbolTableData *arrType_ = NULL, int width_ = 0);
+    symbolTableInit *update_symbol(symbolTableData *type_new);
+};
+
+class SymbolTable
+{
+public:
+    string name;
+    int temporaryVariablesST;
+    list<symbolTableInit> symTable;
+    SymbolTable *parent;
+
+    SymbolTable(string name_ = "NULL");
+
+    symbolTableInit *findInCurrent(string name_);
+
+    symbolTableInit *lookup(string name_);
+
+    symbolTableInit *createNewSymbol(string name, symbolTableData *t);
+
+    void initializeSymbol(symbolTableInit *sym, string initial_val);
+
+    void addSymbolToTable(symbolTableInit *sym);
+
+    symbolTableInit *gentemp(symbolTableData *t, string initial_val = "");
+
+    void printHeader();
+    void print();
+
+    void update();
+};
+
+class Quad
+{
+public:
+    string op;
+    string arg1;
+    string arg2;
+    string result;
+    Quad(string res, string arg1_, string operation = "=", string arg2_ = "");
+    Quad(string res, int arg1_, string operation = "=", string arg2_ = "");
+    int print_quad();
+};
+
+class quadArray
+{
+public:
+    vector<Quad> quads;
+    int print();
+    void printQuadArray();
+};
+
+class Array
+{
+public:
+    string arrayType;
+    symbolTableInit *STaddress;
+    symbolTableInit *array;
+    symbolTableData *type;
+};
+
+class Statement
+{
+public:
+    list<int> nextlist;
+};
+
+class Expression
+{
+public:
+    string type;
+    symbolTableInit *STaddress;
+    list<int> truelist;
+    list<int> falselist;
+    list<int> nextlist;
+};
+
+list<int> makelist(int i);
+list<int> merge(list<int> &list1, list<int> &list2);
+void backpatch(list<int> l, int address);
+void emit(string op, string result, string arg1 = "", string arg2 = "");
+void emit(string op, string result, int arg1, string arg2 = "");
+int typecheck(symbolTableInit *&s1, symbolTableInit *&s2);
+int typecheck(symbolTableData *t1, symbolTableData *t2);
+string getSymbolTableDataDescription(symbolTableData *t);
+Expression *intToBoolConversion(Expression *expr);
+Expression *boolToIntConversion(Expression *expr);
+void replaceActiveSymbolTable(SymbolTable *new_table);
+int nextinstr();
+int getSize(symbolTableData *t);
+symbolTableInit *convertType(symbolTableInit *s, string t);
+
     #include "220101048.tab.h"
 
-#line 539 "lex.yy.c"
+#line 679 "lex.yy.c"
 
-#line 541 "lex.yy.c"
+#line 681 "lex.yy.c"
 
 #define INITIAL 0
 #define SINGLE_COMMENT 1
@@ -756,10 +896,10 @@ YY_DECL
 		}
 
 	{
-#line 78 "220101048.l"
+#line 218 "220101048.l"
 
 
-#line 763 "lex.yy.c"
+#line 903 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -818,260 +958,260 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 80 "220101048.l"
+#line 220 "220101048.l"
 {BEGIN(SINGLE_COMMENT);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 81 "220101048.l"
+#line 221 "220101048.l"
 {}
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 82 "220101048.l"
+#line 222 "220101048.l"
 {BEGIN(INITIAL);}
 	YY_BREAK
 case YY_STATE_EOF(SINGLE_COMMENT):
-#line 83 "220101048.l"
+#line 223 "220101048.l"
 {BEGIN(INITIAL);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 86 "220101048.l"
+#line 226 "220101048.l"
 {BEGIN(MULTI_COMMENT);}
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 87 "220101048.l"
+#line 227 "220101048.l"
 {}
 	YY_BREAK
 case 6:
 /* rule 6 can match eol */
 YY_RULE_SETUP
-#line 88 "220101048.l"
+#line 228 "220101048.l"
 {}
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 89 "220101048.l"
+#line 229 "220101048.l"
 {}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 90 "220101048.l"
+#line 230 "220101048.l"
 {BEGIN(INITIAL);}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 94 "220101048.l"
+#line 234 "220101048.l"
 {return CHAR;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 95 "220101048.l"
+#line 235 "220101048.l"
 {return ELSE;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 96 "220101048.l"
+#line 236 "220101048.l"
 {return FOR;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 97 "220101048.l"
+#line 237 "220101048.l"
 {return IF;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 98 "220101048.l"
+#line 238 "220101048.l"
 {return INT;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 99 "220101048.l"
+#line 239 "220101048.l"
 {return RETURN;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 100 "220101048.l"
+#line 240 "220101048.l"
 {return VOID;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 101 "220101048.l"
+#line 241 "220101048.l"
 {return FLOAT;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 102 "220101048.l"
+#line 242 "220101048.l"
 {return WHILE;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 103 "220101048.l"
+#line 243 "220101048.l"
 {return DO;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 104 "220101048.l"
+#line 244 "220101048.l"
 {return BEG;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 105 "220101048.l"
+#line 245 "220101048.l"
 {return END;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 107 "220101048.l"
+#line 247 "220101048.l"
 {return LEFT_SQUARE_BRACKET;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 108 "220101048.l"
+#line 248 "220101048.l"
 {return RIGHT_SQUARE_BRACKET;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 109 "220101048.l"
+#line 249 "220101048.l"
 {return LEFT_PARENTHESIS;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 110 "220101048.l"
+#line 250 "220101048.l"
 {return RIGHT_PARENTHESIS;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 112 "220101048.l"
+#line 252 "220101048.l"
 {return ARROW;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 114 "220101048.l"
+#line 254 "220101048.l"
 {return QUESTION_MARK;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 115 "220101048.l"
+#line 255 "220101048.l"
 {return COLON;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 116 "220101048.l"
+#line 256 "220101048.l"
 {return SEMICOLON;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 117 "220101048.l"
+#line 257 "220101048.l"
 {return ASSIGN;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 118 "220101048.l"
+#line 258 "220101048.l"
 {return COMMA;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 120 "220101048.l"
+#line 260 "220101048.l"
 {return BITWISE_AND;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 121 "220101048.l"
+#line 261 "220101048.l"
 {return BITWISE_OR;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 122 "220101048.l"
+#line 262 "220101048.l"
 {return BITWISE_XOR;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 124 "220101048.l"
+#line 264 "220101048.l"
 {return LOGICAL_AND;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 125 "220101048.l"
+#line 265 "220101048.l"
 {return LOGICAL_OR;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 127 "220101048.l"
+#line 267 "220101048.l"
 {return ADDITION;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 128 "220101048.l"
+#line 268 "220101048.l"
 {return SUBTRACTION;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 129 "220101048.l"
+#line 269 "220101048.l"
 {return MULTIPLICATION;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 130 "220101048.l"
+#line 270 "220101048.l"
 {return DIVISION;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 131 "220101048.l"
+#line 271 "220101048.l"
 {return MODULO;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 133 "220101048.l"
+#line 273 "220101048.l"
 {return NOT;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 134 "220101048.l"
+#line 274 "220101048.l"
 {return LESS_THAN;}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 135 "220101048.l"
+#line 275 "220101048.l"
 {return GREATER_THAN;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 136 "220101048.l"
+#line 276 "220101048.l"
 {return LESS_THAN_OR_EQUAL_TO;}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 137 "220101048.l"
+#line 277 "220101048.l"
 {return GREATER_THAN_OR_EQUAL_TO;}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 138 "220101048.l"
+#line 278 "220101048.l"
 {return EQUAL;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 139 "220101048.l"
+#line 279 "220101048.l"
 {return NOT_EQUAL;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 141 "220101048.l"
+#line 281 "220101048.l"
 {return LSHIFT;}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 142 "220101048.l"
+#line 282 "220101048.l"
 {return RSHIFT;}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 145 "220101048.l"
+#line 285 "220101048.l"
 {
                                     yylval.symptr = currentSymbolTable->lookup(yytext);
                                     return IDENTIFIER;
@@ -1079,42 +1219,42 @@ YY_RULE_SETUP
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 150 "220101048.l"
+#line 290 "220101048.l"
 { yylval.int_value = atoi(yytext); return INTEGER_CONSTANT; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 151 "220101048.l"
+#line 291 "220101048.l"
 { yylval.charVal = strdup(yytext); return CHARACTER_CONSTANT; }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 152 "220101048.l"
+#line 292 "220101048.l"
 { yylval.string_value = strdup(yytext); return STRING_LITERAL; }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 153 "220101048.l"
+#line 293 "220101048.l"
 {yylval.floatVal = atof(yytext); return FLOAT_CONST;}
 	YY_BREAK
 case 55:
 /* rule 55 can match eol */
 YY_RULE_SETUP
-#line 155 "220101048.l"
+#line 295 "220101048.l"
 {}
 	YY_BREAK
 case 56:
 /* rule 56 can match eol */
 YY_RULE_SETUP
-#line 156 "220101048.l"
+#line 296 "220101048.l"
 {}
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 160 "220101048.l"
+#line 300 "220101048.l"
 ECHO;
 	YY_BREAK
-#line 1118 "lex.yy.c"
+#line 1258 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(MULTI_COMMENT):
 	yyterminate();
@@ -2120,7 +2260,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 160 "220101048.l"
+#line 300 "220101048.l"
 
 
 int yywrap()

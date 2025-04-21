@@ -1,14 +1,10 @@
 #include <map>
 #include <iomanip>
-using namespace std;
-
-#ifndef __31_A4_TRANSLATOR_H__
-#define __31_A4_TRANSLATOR_H__
-
 #include <iostream>
 #include <vector>
 #include <list>
 #include <string>
+#include <bits/stdc++.h>
 using namespace std;
 
 #define _SIZE_VOID 0
@@ -143,7 +139,7 @@ int nextinstr();
 int getSize(symbolTableData *t);
 symbolTableInit *convertType(symbolTableInit *s, string t);
 
-#endif
+
 
 symbolTableInit *currentSymbol;
 SymbolTable *globalSymbolTable;
