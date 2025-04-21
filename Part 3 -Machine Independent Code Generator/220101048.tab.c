@@ -602,18 +602,18 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   127,   127,   133,   138,   144,   150,   158,   163,   172,
-     186,   206,   212,   218,   223,   231,   235,   278,   282,   286,
-     290,   294,   303,   319,   330,   341,   355,   359,   370,   384,
-     388,   399,   414,   418,   432,   446,   460,   476,   480,   494,
-     498,   512,   516,   530,   534,   550,   570,   574,   587,   591,
-     604,   608,   628,   634,   643,   647,   665,   671,   678,   684,
-     688,   698,   702,   706,   710,   718,   727,   732,   740,   745,
-     764,   776,   791,   798,   800,   805,   814,   819,   821,   826,
-     833,   837,   842,   846,   850,   857,   862,   866,   870,   877,
-     886,   890,   898,   902,   909,   913,   920,   929,   942,   956,
-     963,   975,   988,   993,  1001,  1003,  1008,  1010,  1015,  1025,
-    1027,  1033,  1037,  1044,  1048,  1054,  1056
+       0,   127,   127,   133,   138,   144,   150,   160,   165,   174,
+     188,   208,   214,   220,   225,   233,   237,   280,   284,   288,
+     292,   296,   305,   321,   332,   343,   357,   361,   372,   386,
+     390,   401,   416,   420,   434,   448,   462,   478,   482,   496,
+     500,   514,   518,   532,   536,   552,   572,   576,   589,   593,
+     606,   610,   630,   636,   645,   649,   667,   673,   680,   686,
+     690,   700,   704,   708,   712,   720,   729,   734,   742,   747,
+     766,   778,   793,   800,   802,   807,   816,   821,   823,   828,
+     835,   839,   844,   848,   852,   859,   864,   868,   872,   879,
+     888,   892,   900,   904,   911,   915,   922,   931,   944,   958,
+     965,   977,   990,   995,  1003,  1005,  1010,  1012,  1017,  1027,
+    1029,  1035,  1039,  1046,  1050,  1056,  1058
 };
 #endif
 
@@ -1383,31 +1383,33 @@ yyreduce:
 #line 151 "220101048.y"
      {
         (yyval.expr) = new Expression();
-        (yyval.expr)->STaddress = (yyvsp[0].floatVal);
+        string val = to_string((yyvsp[0].floatVal));
+        (yyval.expr)->STaddress = currentSymbolTable->gentemp(new symbolTableData("float"), val);
+        (yyval.expr)->STaddress->symbolTableEntryType->arrElementType = new symbolTableData("float");
     }
-#line 1389 "220101048.tab.c"
+#line 1391 "220101048.tab.c"
     break;
 
   case 7: /* constant: INTEGER_CONSTANT  */
-#line 159 "220101048.y"
+#line 161 "220101048.y"
     {
         (yyval.symptr) = currentSymbolTable->gentemp(new symbolTableData("int"), to_string((yyvsp[0].int_value)));
         emit("=", (yyval.symptr)->name, (yyvsp[0].int_value));
     }
-#line 1398 "220101048.tab.c"
+#line 1400 "220101048.tab.c"
     break;
 
   case 8: /* constant: CHARACTER_CONSTANT  */
-#line 164 "220101048.y"
+#line 166 "220101048.y"
     {
         (yyval.symptr) = currentSymbolTable->gentemp(new symbolTableData("char"), string((yyvsp[0].string_value)));
         emit("=", (yyval.symptr)->name, string((yyvsp[0].string_value)));
     }
-#line 1407 "220101048.tab.c"
+#line 1409 "220101048.tab.c"
     break;
 
   case 9: /* postfix_expression: primary_expression  */
-#line 173 "220101048.y"
+#line 175 "220101048.y"
     {
         (yyval.arr) = new Array();
         if ((yyvsp[0].expr)->type != "bool")
@@ -1421,11 +1423,11 @@ yyreduce:
             (yyval.arr)->arrayType = "bool_temporary";
         }
     }
-#line 1425 "220101048.tab.c"
+#line 1427 "220101048.tab.c"
     break;
 
   case 10: /* postfix_expression: postfix_expression LEFT_SQUARE_BRACKET expression RIGHT_SQUARE_BRACKET  */
-#line 187 "220101048.y"
+#line 189 "220101048.y"
     {
         (yyval.arr) = new Array();
         (yyval.arr)->type = (yyvsp[-3].arr)->type->arrElementType;
@@ -1445,53 +1447,53 @@ yyreduce:
             emit("*", (yyval.arr)->STaddress->name, (yyvsp[-1].expr)->STaddress->name, to_string(sz));
         }
     }
-#line 1449 "220101048.tab.c"
+#line 1451 "220101048.tab.c"
     break;
 
   case 11: /* postfix_expression: postfix_expression LEFT_PARENTHESIS argument_expression_list_opt RIGHT_PARENTHESIS  */
-#line 207 "220101048.y"
+#line 209 "220101048.y"
     {
         (yyval.arr) = new Array();
         (yyval.arr)->array = currentSymbolTable->gentemp((yyvsp[-3].arr)->type);
         emit("call", (yyval.arr)->array->name, (yyvsp[-3].arr)->array->name, to_string((yyvsp[-1].numParams)));
     }
-#line 1459 "220101048.tab.c"
+#line 1461 "220101048.tab.c"
     break;
 
   case 12: /* postfix_expression: postfix_expression ARROW IDENTIFIER  */
-#line 213 "220101048.y"
+#line 215 "220101048.y"
     {}
-#line 1465 "220101048.tab.c"
+#line 1467 "220101048.tab.c"
     break;
 
   case 13: /* argument_expression_list: assignment_expression  */
-#line 219 "220101048.y"
+#line 221 "220101048.y"
     {
         (yyval.numParams) = 1;
         emit("param", (yyvsp[0].expr)->STaddress->name);
     }
-#line 1474 "220101048.tab.c"
+#line 1476 "220101048.tab.c"
     break;
 
   case 14: /* argument_expression_list: argument_expression_list COMMA assignment_expression  */
-#line 224 "220101048.y"
+#line 226 "220101048.y"
     {
         (yyval.numParams) = (yyvsp[-2].numParams) + 1;
         emit("param", (yyvsp[0].expr)->STaddress->name);
     }
-#line 1483 "220101048.tab.c"
+#line 1485 "220101048.tab.c"
     break;
 
   case 15: /* unary_expression: postfix_expression  */
-#line 232 "220101048.y"
+#line 234 "220101048.y"
     {
         (yyval.arr) = (yyvsp[0].arr);
     }
-#line 1491 "220101048.tab.c"
+#line 1493 "220101048.tab.c"
     break;
 
   case 16: /* unary_expression: unary_operator unary_expression  */
-#line 236 "220101048.y"
+#line 238 "220101048.y"
     {
         (yyval.arr) = new Array();
         switch ((yyvsp[-1].unaryOp))
@@ -1530,51 +1532,51 @@ yyreduce:
             break;
         }
     }
-#line 1534 "220101048.tab.c"
+#line 1536 "220101048.tab.c"
     break;
 
   case 17: /* unary_operator: BITWISE_AND  */
-#line 279 "220101048.y"
+#line 281 "220101048.y"
     {
         (yyval.unaryOp) = '&';
     }
-#line 1542 "220101048.tab.c"
+#line 1544 "220101048.tab.c"
     break;
 
   case 18: /* unary_operator: MULTIPLICATION  */
-#line 283 "220101048.y"
+#line 285 "220101048.y"
     {
         (yyval.unaryOp) = '*';
     }
-#line 1550 "220101048.tab.c"
+#line 1552 "220101048.tab.c"
     break;
 
   case 19: /* unary_operator: ADDITION  */
-#line 287 "220101048.y"
+#line 289 "220101048.y"
     {
         (yyval.unaryOp) = '+';
     }
-#line 1558 "220101048.tab.c"
+#line 1560 "220101048.tab.c"
     break;
 
   case 20: /* unary_operator: SUBTRACTION  */
-#line 291 "220101048.y"
+#line 293 "220101048.y"
     {
         (yyval.unaryOp) = '-';
     }
-#line 1566 "220101048.tab.c"
+#line 1568 "220101048.tab.c"
     break;
 
   case 21: /* unary_operator: NOT  */
-#line 295 "220101048.y"
+#line 297 "220101048.y"
     {
         (yyval.unaryOp) = '!';
     }
-#line 1574 "220101048.tab.c"
+#line 1576 "220101048.tab.c"
     break;
 
   case 22: /* multiplicative_expression: unary_expression  */
-#line 304 "220101048.y"
+#line 306 "220101048.y"
         {
             (yyval.expr) = new Expression();
             if((yyvsp[0].arr)->arrayType == "arr") {
@@ -1590,11 +1592,11 @@ yyreduce:
                 (yyval.expr)->STaddress = (yyvsp[0].arr)->array;
             }
         }
-#line 1594 "220101048.tab.c"
+#line 1596 "220101048.tab.c"
     break;
 
   case 23: /* multiplicative_expression: multiplicative_expression MULTIPLICATION unary_expression  */
-#line 320 "220101048.y"
+#line 322 "220101048.y"
         {
             if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].arr)->array)) {
                 (yyval.expr) = new Expression();
@@ -1605,11 +1607,11 @@ yyreduce:
                 yyerror("Type Error");
             }
         }
-#line 1609 "220101048.tab.c"
+#line 1611 "220101048.tab.c"
     break;
 
   case 24: /* multiplicative_expression: multiplicative_expression DIVISION unary_expression  */
-#line 331 "220101048.y"
+#line 333 "220101048.y"
         {
             if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].arr)->array)) {
                 (yyval.expr) = new Expression();
@@ -1620,11 +1622,11 @@ yyreduce:
                 yyerror("Type Error");
             }
         }
-#line 1624 "220101048.tab.c"
+#line 1626 "220101048.tab.c"
     break;
 
   case 25: /* multiplicative_expression: multiplicative_expression MODULO unary_expression  */
-#line 342 "220101048.y"
+#line 344 "220101048.y"
         {
             if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].arr)->array)) {
                 (yyval.expr) = new Expression();
@@ -1635,19 +1637,19 @@ yyreduce:
                 yyerror("Type Error");
             }
         }
-#line 1639 "220101048.tab.c"
+#line 1641 "220101048.tab.c"
     break;
 
   case 26: /* additive_expression: multiplicative_expression  */
-#line 356 "220101048.y"
+#line 358 "220101048.y"
         {
             (yyval.expr) = (yyvsp[0].expr);
         }
-#line 1647 "220101048.tab.c"
+#line 1649 "220101048.tab.c"
     break;
 
   case 27: /* additive_expression: additive_expression ADDITION multiplicative_expression  */
-#line 360 "220101048.y"
+#line 362 "220101048.y"
         {   
             if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
                 (yyval.expr) = new Expression();
@@ -1658,11 +1660,11 @@ yyreduce:
                 yyerror("Type Error");
             }
         }
-#line 1662 "220101048.tab.c"
+#line 1664 "220101048.tab.c"
     break;
 
   case 28: /* additive_expression: additive_expression SUBTRACTION multiplicative_expression  */
-#line 371 "220101048.y"
+#line 373 "220101048.y"
         {
             if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
                 (yyval.expr) = new Expression();
@@ -1673,19 +1675,19 @@ yyreduce:
                 yyerror("Type Error");
             }
         }
-#line 1677 "220101048.tab.c"
+#line 1679 "220101048.tab.c"
     break;
 
   case 29: /* shift_expression: additive_expression  */
-#line 385 "220101048.y"
+#line 387 "220101048.y"
     {
         (yyval.expr) = (yyvsp[0].expr);
     }
-#line 1685 "220101048.tab.c"
+#line 1687 "220101048.tab.c"
     break;
 
   case 30: /* shift_expression: shift_expression LSHIFT additive_expression  */
-#line 389 "220101048.y"
+#line 391 "220101048.y"
     {
         if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
             (yyval.expr) = new Expression();
@@ -1696,11 +1698,11 @@ yyreduce:
             yyerror("Type mismatch in shift expression");
         }
     }
-#line 1700 "220101048.tab.c"
+#line 1702 "220101048.tab.c"
     break;
 
   case 31: /* shift_expression: shift_expression RSHIFT additive_expression  */
-#line 400 "220101048.y"
+#line 402 "220101048.y"
     {
         if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
             (yyval.expr) = new Expression();
@@ -1711,19 +1713,19 @@ yyreduce:
             yyerror("Type mismatch in shift expression");
         }
     }
-#line 1715 "220101048.tab.c"
+#line 1717 "220101048.tab.c"
     break;
 
   case 32: /* relational_expression: shift_expression  */
-#line 415 "220101048.y"
+#line 417 "220101048.y"
         {
             (yyval.expr) = (yyvsp[0].expr);
         }
-#line 1723 "220101048.tab.c"
+#line 1725 "220101048.tab.c"
     break;
 
   case 33: /* relational_expression: relational_expression LESS_THAN shift_expression  */
-#line 419 "220101048.y"
+#line 421 "220101048.y"
         {
             if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
                 (yyval.expr) = new Expression();
@@ -1737,11 +1739,11 @@ yyreduce:
                 yyerror("Type Error");
             }
         }
-#line 1741 "220101048.tab.c"
+#line 1743 "220101048.tab.c"
     break;
 
   case 34: /* relational_expression: relational_expression GREATER_THAN shift_expression  */
-#line 433 "220101048.y"
+#line 435 "220101048.y"
         {
             if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
                 (yyval.expr) = new Expression();
@@ -1755,11 +1757,11 @@ yyreduce:
                 yyerror("Type Error");
             }
         }
-#line 1759 "220101048.tab.c"
+#line 1761 "220101048.tab.c"
     break;
 
   case 35: /* relational_expression: relational_expression LESS_THAN_OR_EQUAL_TO shift_expression  */
-#line 447 "220101048.y"
+#line 449 "220101048.y"
         {
             if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
                 (yyval.expr) = new Expression();
@@ -1773,11 +1775,11 @@ yyreduce:
                 yyerror("Type Error");
             }
         }
-#line 1777 "220101048.tab.c"
+#line 1779 "220101048.tab.c"
     break;
 
   case 36: /* relational_expression: relational_expression GREATER_THAN_OR_EQUAL_TO shift_expression  */
-#line 461 "220101048.y"
+#line 463 "220101048.y"
         {
             if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
                 (yyval.expr) = new Expression();
@@ -1791,19 +1793,19 @@ yyreduce:
                 yyerror("Type Error");
             }
         }
-#line 1795 "220101048.tab.c"
+#line 1797 "220101048.tab.c"
     break;
 
   case 37: /* bitwise_AND_expression: equality_expression  */
-#line 477 "220101048.y"
+#line 479 "220101048.y"
     {
         (yyval.expr) = (yyvsp[0].expr);
     }
-#line 1803 "220101048.tab.c"
+#line 1805 "220101048.tab.c"
     break;
 
   case 38: /* bitwise_AND_expression: bitwise_AND_expression BITWISE_AND equality_expression  */
-#line 481 "220101048.y"
+#line 483 "220101048.y"
     {
         if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
             (yyval.expr) = new Expression();
@@ -1814,19 +1816,19 @@ yyreduce:
             yyerror("Type error in bit AND operation");
         }
     }
-#line 1818 "220101048.tab.c"
+#line 1820 "220101048.tab.c"
     break;
 
   case 39: /* bitwise_XOR_expression: bitwise_AND_expression  */
-#line 495 "220101048.y"
+#line 497 "220101048.y"
     {
         (yyval.expr) = (yyvsp[0].expr);
     }
-#line 1826 "220101048.tab.c"
+#line 1828 "220101048.tab.c"
     break;
 
   case 40: /* bitwise_XOR_expression: bitwise_XOR_expression BITWISE_XOR bitwise_AND_expression  */
-#line 499 "220101048.y"
+#line 501 "220101048.y"
     {
         if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
             (yyval.expr) = new Expression();
@@ -1837,19 +1839,19 @@ yyreduce:
             yyerror("Type error in bit XOR operation");
         }
     }
-#line 1841 "220101048.tab.c"
+#line 1843 "220101048.tab.c"
     break;
 
   case 41: /* bitwise_OR_expression: bitwise_XOR_expression  */
-#line 513 "220101048.y"
+#line 515 "220101048.y"
     {
         (yyval.expr) = (yyvsp[0].expr);
     }
-#line 1849 "220101048.tab.c"
+#line 1851 "220101048.tab.c"
     break;
 
   case 42: /* bitwise_OR_expression: bitwise_OR_expression BITWISE_OR bitwise_XOR_expression  */
-#line 517 "220101048.y"
+#line 519 "220101048.y"
     {
         if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
             (yyval.expr) = new Expression();
@@ -1860,19 +1862,19 @@ yyreduce:
             yyerror("Type error in bit OR operation");
         }
     }
-#line 1864 "220101048.tab.c"
+#line 1866 "220101048.tab.c"
     break;
 
   case 43: /* equality_expression: relational_expression  */
-#line 531 "220101048.y"
+#line 533 "220101048.y"
         {
             (yyval.expr) = (yyvsp[0].expr);
         }
-#line 1872 "220101048.tab.c"
+#line 1874 "220101048.tab.c"
     break;
 
   case 44: /* equality_expression: equality_expression EQUAL relational_expression  */
-#line 535 "220101048.y"
+#line 537 "220101048.y"
         {
             if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
                 boolToIntConversion((yyvsp[-2].expr));
@@ -1888,11 +1890,11 @@ yyreduce:
                 yyerror("Type Error");
             }
         }
-#line 1892 "220101048.tab.c"
+#line 1894 "220101048.tab.c"
     break;
 
   case 45: /* equality_expression: equality_expression NOT_EQUAL relational_expression  */
-#line 551 "220101048.y"
+#line 553 "220101048.y"
         {
             if(typecheck((yyvsp[-2].expr)->STaddress, (yyvsp[0].expr)->STaddress)) {
                 boolToIntConversion((yyvsp[-2].expr));
@@ -1908,19 +1910,19 @@ yyreduce:
                 yyerror("Type Error");
             }
         }
-#line 1912 "220101048.tab.c"
+#line 1914 "220101048.tab.c"
     break;
 
   case 46: /* logical_and_expression: bitwise_OR_expression  */
-#line 571 "220101048.y"
+#line 573 "220101048.y"
         {
             (yyval.expr) = (yyvsp[0].expr);
         }
-#line 1920 "220101048.tab.c"
+#line 1922 "220101048.tab.c"
     break;
 
   case 47: /* logical_and_expression: logical_and_expression LOGICAL_AND A bitwise_OR_expression  */
-#line 575 "220101048.y"
+#line 577 "220101048.y"
         {
             intToBoolConversion((yyvsp[-3].expr));
             intToBoolConversion((yyvsp[0].expr));
@@ -1930,19 +1932,19 @@ yyreduce:
             (yyval.expr)->truelist = (yyvsp[0].expr)->truelist;
             (yyval.expr)->falselist = merge((yyvsp[-3].expr)->falselist, (yyvsp[0].expr)->falselist);
         }
-#line 1934 "220101048.tab.c"
+#line 1936 "220101048.tab.c"
     break;
 
   case 48: /* logical_or_expression: logical_and_expression  */
-#line 588 "220101048.y"
+#line 590 "220101048.y"
         {
             (yyval.expr) = (yyvsp[0].expr);
         }
-#line 1942 "220101048.tab.c"
+#line 1944 "220101048.tab.c"
     break;
 
   case 49: /* logical_or_expression: logical_or_expression LOGICAL_OR A logical_and_expression  */
-#line 592 "220101048.y"
+#line 594 "220101048.y"
         {
             intToBoolConversion((yyvsp[-3].expr));
             intToBoolConversion((yyvsp[0].expr));
@@ -1952,19 +1954,19 @@ yyreduce:
             (yyval.expr)->falselist = (yyvsp[0].expr)->falselist;
             (yyval.expr)->truelist = merge((yyvsp[-3].expr)->truelist, (yyvsp[0].expr)->truelist);
         }
-#line 1956 "220101048.tab.c"
+#line 1958 "220101048.tab.c"
     break;
 
   case 50: /* conditional_expression: logical_or_expression  */
-#line 605 "220101048.y"
+#line 607 "220101048.y"
         {
             (yyval.expr) = (yyvsp[0].expr);
         }
-#line 1964 "220101048.tab.c"
+#line 1966 "220101048.tab.c"
     break;
 
   case 51: /* conditional_expression: logical_or_expression B QUESTION_MARK A expression B COLON A conditional_expression  */
-#line 609 "220101048.y"
+#line 611 "220101048.y"
         {   
             (yyval.expr)->STaddress = currentSymbolTable->gentemp((yyvsp[-4].expr)->STaddress->symbolTableEntryType);
             (yyval.expr)->STaddress->update_symbol((yyvsp[-4].expr)->STaddress->symbolTableEntryType);
@@ -1982,37 +1984,37 @@ yyreduce:
             backpatch((yyvsp[-8].expr)->falselist, (yyvsp[-1].instr));
             backpatch(l1, nextinstr());
         }
-#line 1986 "220101048.tab.c"
+#line 1988 "220101048.tab.c"
     break;
 
   case 52: /* A: %empty  */
-#line 629 "220101048.y"
+#line 631 "220101048.y"
         {   
             (yyval.instr) = nextinstr();
         }
-#line 1994 "220101048.tab.c"
+#line 1996 "220101048.tab.c"
     break;
 
   case 53: /* B: %empty  */
-#line 635 "220101048.y"
+#line 637 "220101048.y"
         {
             (yyval.stmt) = new Statement();
             (yyval.stmt)->nextlist = makelist(nextinstr());
             emit("goto", "");
         }
-#line 2004 "220101048.tab.c"
+#line 2006 "220101048.tab.c"
     break;
 
   case 54: /* assignment_expression: conditional_expression  */
-#line 644 "220101048.y"
+#line 646 "220101048.y"
         {
             (yyval.expr) = (yyvsp[0].expr);
         }
-#line 2012 "220101048.tab.c"
+#line 2014 "220101048.tab.c"
     break;
 
   case 55: /* assignment_expression: unary_expression assignment_operator assignment_expression  */
-#line 648 "220101048.y"
+#line 650 "220101048.y"
         {
             if((yyvsp[-2].arr)->arrayType == "arr") {
                 (yyvsp[0].expr)->STaddress = convertType((yyvsp[0].expr)->STaddress, (yyvsp[-2].arr)->type->type);
@@ -2027,82 +2029,82 @@ yyreduce:
             }
             (yyval.expr) = (yyvsp[0].expr);
         }
-#line 2031 "220101048.tab.c"
+#line 2033 "220101048.tab.c"
     break;
 
   case 56: /* assignment_operator: ASSIGN  */
-#line 666 "220101048.y"
+#line 668 "220101048.y"
         {}
-#line 2037 "220101048.tab.c"
+#line 2039 "220101048.tab.c"
     break;
 
   case 57: /* expression: assignment_expression  */
-#line 672 "220101048.y"
+#line 674 "220101048.y"
         {
             (yyval.expr) = (yyvsp[0].expr);
         }
-#line 2045 "220101048.tab.c"
+#line 2047 "220101048.tab.c"
     break;
 
   case 58: /* declaration: type_specifier init_declarator SEMICOLON  */
-#line 679 "220101048.y"
+#line 681 "220101048.y"
         {}
-#line 2051 "220101048.tab.c"
+#line 2053 "220101048.tab.c"
     break;
 
   case 59: /* init_declarator: declarator  */
-#line 685 "220101048.y"
+#line 687 "220101048.y"
         {
             (yyval.symptr) = (yyvsp[0].symptr);
         }
-#line 2059 "220101048.tab.c"
+#line 2061 "220101048.tab.c"
     break;
 
   case 60: /* init_declarator: declarator ASSIGN initializer  */
-#line 689 "220101048.y"
+#line 691 "220101048.y"
         {   
             if((yyvsp[0].symptr)->val != "") {
                 (yyvsp[-2].symptr)->val = (yyvsp[0].symptr)->val;
             }
             emit("=", (yyvsp[-2].symptr)->name, (yyvsp[0].symptr)->name);
         }
-#line 2070 "220101048.tab.c"
+#line 2072 "220101048.tab.c"
     break;
 
   case 61: /* type_specifier: VOID  */
-#line 699 "220101048.y"
+#line 701 "220101048.y"
         {
             prevType = "void";
         }
-#line 2078 "220101048.tab.c"
+#line 2080 "220101048.tab.c"
     break;
 
   case 62: /* type_specifier: CHAR  */
-#line 703 "220101048.y"
+#line 705 "220101048.y"
         {
             prevType = "char";
         }
-#line 2086 "220101048.tab.c"
+#line 2088 "220101048.tab.c"
     break;
 
   case 63: /* type_specifier: INT  */
-#line 707 "220101048.y"
+#line 709 "220101048.y"
         {
             prevType = "int";
         }
-#line 2094 "220101048.tab.c"
+#line 2096 "220101048.tab.c"
     break;
 
   case 64: /* type_specifier: FLOAT  */
-#line 711 "220101048.y"
+#line 713 "220101048.y"
         {
             prevType = "float";
         }
-#line 2102 "220101048.tab.c"
+#line 2104 "220101048.tab.c"
     break;
 
   case 65: /* declarator: pointer direct_declarator  */
-#line 719 "220101048.y"
+#line 721 "220101048.y"
         {
             symbolTableData* t = (yyvsp[-1].symType);
             while(t->arrElementType != NULL) {
@@ -2111,35 +2113,35 @@ yyreduce:
             t->arrElementType = (yyvsp[0].symptr)->symbolTableEntryType;
             (yyval.symptr) = (yyvsp[0].symptr)->update_symbol((yyvsp[-1].symType));
         }
-#line 2115 "220101048.tab.c"
+#line 2117 "220101048.tab.c"
     break;
 
   case 66: /* declarator: direct_declarator  */
-#line 728 "220101048.y"
+#line 730 "220101048.y"
         {}
-#line 2121 "220101048.tab.c"
+#line 2123 "220101048.tab.c"
     break;
 
   case 67: /* intermediate_identifier: IDENTIFIER  */
-#line 733 "220101048.y"
+#line 735 "220101048.y"
         {
             (yyval.symptr) = (yyvsp[0].symptr)->update_symbol(new symbolTableData(prevType));
             currentSymbol = (yyval.symptr);
         }
-#line 2130 "220101048.tab.c"
+#line 2132 "220101048.tab.c"
     break;
 
   case 68: /* direct_declarator: IDENTIFIER  */
-#line 741 "220101048.y"
+#line 743 "220101048.y"
         {
             (yyval.symptr) = (yyvsp[0].symptr)->update_symbol(new symbolTableData(prevType));
             currentSymbol = (yyval.symptr);
         }
-#line 2139 "220101048.tab.c"
+#line 2141 "220101048.tab.c"
     break;
 
   case 69: /* direct_declarator: IDENTIFIER LEFT_SQUARE_BRACKET INTEGER_CONSTANT RIGHT_SQUARE_BRACKET  */
-#line 746 "220101048.y"
+#line 748 "220101048.y"
         {
             symbolTableData* t = (yyvsp[-3].symptr)->symbolTableEntryType;
             symbolTableData* prev = NULL;
@@ -2158,11 +2160,11 @@ yyreduce:
                 (yyval.symptr) = (yyvsp[-3].symptr)->update_symbol((yyvsp[-3].symptr)->symbolTableEntryType);
             }
         }
-#line 2162 "220101048.tab.c"
+#line 2164 "220101048.tab.c"
     break;
 
   case 70: /* direct_declarator: intermediate_identifier LEFT_PARENTHESIS replaceActiveSymbolTableParse parameter_list RIGHT_PARENTHESIS  */
-#line 765 "220101048.y"
+#line 767 "220101048.y"
         {
             currentSymbolTable->name = (yyvsp[-4].symptr)->name;
             if((yyvsp[-4].symptr)->symbolTableEntryType->type != "void") {
@@ -2174,11 +2176,11 @@ yyreduce:
             replaceActiveSymbolTable(globalSymbolTable);
             currentSymbol = (yyval.symptr);
         }
-#line 2178 "220101048.tab.c"
+#line 2180 "220101048.tab.c"
     break;
 
   case 71: /* direct_declarator: intermediate_identifier LEFT_PARENTHESIS replaceActiveSymbolTableParse RIGHT_PARENTHESIS  */
-#line 777 "220101048.y"
+#line 779 "220101048.y"
         {
             currentSymbolTable->name = (yyvsp[-3].symptr)->name;
             if((yyvsp[-3].symptr)->symbolTableEntryType->type != "void") {
@@ -2190,31 +2192,31 @@ yyreduce:
             replaceActiveSymbolTable(globalSymbolTable);
             currentSymbol = (yyval.symptr);
         }
-#line 2194 "220101048.tab.c"
+#line 2196 "220101048.tab.c"
     break;
 
   case 72: /* pointer: MULTIPLICATION  */
-#line 792 "220101048.y"
+#line 794 "220101048.y"
         {
             (yyval.symType) = new symbolTableData("ptr");
         }
-#line 2202 "220101048.tab.c"
+#line 2204 "220101048.tab.c"
     break;
 
   case 73: /* parameter_list: parameter_declaration  */
-#line 799 "220101048.y"
+#line 801 "220101048.y"
         {}
-#line 2208 "220101048.tab.c"
+#line 2210 "220101048.tab.c"
     break;
 
   case 74: /* parameter_list: parameter_list COMMA parameter_declaration  */
-#line 801 "220101048.y"
+#line 803 "220101048.y"
         {}
-#line 2214 "220101048.tab.c"
+#line 2216 "220101048.tab.c"
     break;
 
   case 75: /* intermediate_declarator: pointer intermediate_identifier  */
-#line 806 "220101048.y"
+#line 808 "220101048.y"
         {
             symbolTableData* t = (yyvsp[-1].symType);
             while(t->arrElementType != NULL) {
@@ -2223,169 +2225,169 @@ yyreduce:
             t->arrElementType = (yyvsp[0].symptr)->symbolTableEntryType;
             (yyval.symptr) = (yyvsp[0].symptr)->update_symbol((yyvsp[-1].symType));
         }
-#line 2227 "220101048.tab.c"
+#line 2229 "220101048.tab.c"
     break;
 
   case 76: /* intermediate_declarator: intermediate_identifier  */
-#line 815 "220101048.y"
+#line 817 "220101048.y"
         {}
-#line 2233 "220101048.tab.c"
+#line 2235 "220101048.tab.c"
     break;
 
   case 77: /* parameter_declaration: type_specifier intermediate_declarator  */
-#line 820 "220101048.y"
+#line 822 "220101048.y"
         {}
-#line 2239 "220101048.tab.c"
+#line 2241 "220101048.tab.c"
     break;
 
   case 78: /* parameter_declaration: type_specifier  */
-#line 822 "220101048.y"
+#line 824 "220101048.y"
         {}
-#line 2245 "220101048.tab.c"
+#line 2247 "220101048.tab.c"
     break;
 
   case 79: /* initializer: assignment_expression  */
-#line 827 "220101048.y"
+#line 829 "220101048.y"
         {
             (yyval.symptr) = (yyvsp[0].expr)->STaddress;
         }
-#line 2253 "220101048.tab.c"
+#line 2255 "220101048.tab.c"
     break;
 
   case 80: /* statement: compound_statement  */
-#line 834 "220101048.y"
+#line 836 "220101048.y"
         {
             (yyval.stmt) = (yyvsp[0].stmt);
         }
-#line 2261 "220101048.tab.c"
+#line 2263 "220101048.tab.c"
     break;
 
   case 81: /* statement: expression_statement  */
-#line 838 "220101048.y"
+#line 840 "220101048.y"
         {
             (yyval.stmt) = new Statement();
             (yyval.stmt)->nextlist = (yyvsp[0].expr)->nextlist;
         }
-#line 2270 "220101048.tab.c"
+#line 2272 "220101048.tab.c"
     break;
 
   case 82: /* statement: selection_statement  */
-#line 843 "220101048.y"
+#line 845 "220101048.y"
         {
             (yyval.stmt) = (yyvsp[0].stmt);
         }
-#line 2278 "220101048.tab.c"
+#line 2280 "220101048.tab.c"
     break;
 
   case 83: /* statement: iteration_statement  */
-#line 847 "220101048.y"
+#line 849 "220101048.y"
         {
             (yyval.stmt) = (yyvsp[0].stmt);
         }
-#line 2286 "220101048.tab.c"
+#line 2288 "220101048.tab.c"
     break;
 
   case 84: /* statement: jump_statement  */
-#line 851 "220101048.y"
+#line 853 "220101048.y"
         {
             (yyval.stmt) = (yyvsp[0].stmt);
         }
-#line 2294 "220101048.tab.c"
+#line 2296 "220101048.tab.c"
     break;
 
   case 85: /* loop_statement: expression_statement  */
-#line 858 "220101048.y"
+#line 860 "220101048.y"
         {
             (yyval.stmt) = new Statement();
             (yyval.stmt)->nextlist = (yyvsp[0].expr)->nextlist;
         }
-#line 2303 "220101048.tab.c"
+#line 2305 "220101048.tab.c"
     break;
 
   case 86: /* loop_statement: selection_statement  */
-#line 863 "220101048.y"
+#line 865 "220101048.y"
         {
             (yyval.stmt) = (yyvsp[0].stmt);
         }
-#line 2311 "220101048.tab.c"
+#line 2313 "220101048.tab.c"
     break;
 
   case 87: /* loop_statement: iteration_statement  */
-#line 867 "220101048.y"
+#line 869 "220101048.y"
         {
             (yyval.stmt) = (yyvsp[0].stmt);
         }
-#line 2319 "220101048.tab.c"
+#line 2321 "220101048.tab.c"
     break;
 
   case 88: /* loop_statement: jump_statement  */
-#line 871 "220101048.y"
+#line 873 "220101048.y"
         {
             (yyval.stmt) = (yyvsp[0].stmt);
         }
-#line 2327 "220101048.tab.c"
+#line 2329 "220101048.tab.c"
     break;
 
   case 89: /* compound_statement: BEG NESTPARSER replaceActiveSymbolTableParse block_item_list_opt END  */
-#line 878 "220101048.y"
+#line 880 "220101048.y"
         {
             (yyval.stmt) = (yyvsp[-1].stmt);
             replaceActiveSymbolTable(currentSymbolTable->parent);
         }
-#line 2336 "220101048.tab.c"
+#line 2338 "220101048.tab.c"
     break;
 
   case 90: /* block_item_list: block_item  */
-#line 887 "220101048.y"
+#line 889 "220101048.y"
         {
             (yyval.stmt) = (yyvsp[0].stmt);
         }
-#line 2344 "220101048.tab.c"
+#line 2346 "220101048.tab.c"
     break;
 
   case 91: /* block_item_list: block_item_list A block_item  */
-#line 891 "220101048.y"
+#line 893 "220101048.y"
         {
             (yyval.stmt) = (yyvsp[0].stmt);
             backpatch((yyvsp[-2].stmt)->nextlist, (yyvsp[-1].instr));
         }
-#line 2353 "220101048.tab.c"
+#line 2355 "220101048.tab.c"
     break;
 
   case 92: /* block_item: declaration  */
-#line 899 "220101048.y"
+#line 901 "220101048.y"
         {
             (yyval.stmt) = new Statement();
         }
-#line 2361 "220101048.tab.c"
+#line 2363 "220101048.tab.c"
     break;
 
   case 93: /* block_item: statement  */
-#line 903 "220101048.y"
+#line 905 "220101048.y"
         {
             (yyval.stmt) = (yyvsp[0].stmt);
         }
-#line 2369 "220101048.tab.c"
+#line 2371 "220101048.tab.c"
     break;
 
   case 94: /* expression_statement: expression SEMICOLON  */
-#line 910 "220101048.y"
+#line 912 "220101048.y"
         {
             (yyval.expr) = (yyvsp[-1].expr);
         }
-#line 2377 "220101048.tab.c"
+#line 2379 "220101048.tab.c"
     break;
 
   case 95: /* expression_statement: SEMICOLON  */
-#line 914 "220101048.y"
+#line 916 "220101048.y"
         {
             (yyval.expr) = new Expression();
         }
-#line 2385 "220101048.tab.c"
+#line 2387 "220101048.tab.c"
     break;
 
   case 96: /* selection_statement: IF LEFT_PARENTHESIS expression B RIGHT_PARENTHESIS A statement B  */
-#line 921 "220101048.y"
+#line 923 "220101048.y"
         {
             backpatch((yyvsp[-4].stmt)->nextlist, nextinstr());
             intToBoolConversion((yyvsp[-5].expr));
@@ -2394,11 +2396,11 @@ yyreduce:
             list<int> temp = merge((yyvsp[-5].expr)->falselist, (yyvsp[-1].stmt)->nextlist);
             (yyval.stmt)->nextlist = merge((yyvsp[0].stmt)->nextlist, temp);
         }
-#line 2398 "220101048.tab.c"
+#line 2400 "220101048.tab.c"
     break;
 
   case 97: /* selection_statement: IF LEFT_PARENTHESIS expression B RIGHT_PARENTHESIS A statement B ELSE A statement  */
-#line 930 "220101048.y"
+#line 932 "220101048.y"
         {
             backpatch((yyvsp[-7].stmt)->nextlist, nextinstr());
             intToBoolConversion((yyvsp[-8].expr));
@@ -2408,11 +2410,11 @@ yyreduce:
             list<int> temp = merge((yyvsp[-4].stmt)->nextlist, (yyvsp[-3].stmt)->nextlist);
             (yyval.stmt)->nextlist = merge((yyvsp[0].stmt)->nextlist, temp);
         }
-#line 2412 "220101048.tab.c"
+#line 2414 "220101048.tab.c"
     break;
 
   case 98: /* iteration_statement: FOR F LEFT_PARENTHESIS NESTPARSER replaceActiveSymbolTableParse expression_statement A expression_statement A expression B RIGHT_PARENTHESIS A loop_statement  */
-#line 943 "220101048.y"
+#line 945 "220101048.y"
         {
             (yyval.stmt) = new Statement();
             intToBoolConversion((yyvsp[-6].expr));
@@ -2424,19 +2426,19 @@ yyreduce:
             currentBlock = "";
             replaceActiveSymbolTable(currentSymbolTable->parent);
         }
-#line 2428 "220101048.tab.c"
+#line 2430 "220101048.tab.c"
     break;
 
   case 99: /* F: %empty  */
-#line 957 "220101048.y"
+#line 959 "220101048.y"
         {   
             currentBlock = "FOR";
         }
-#line 2436 "220101048.tab.c"
+#line 2438 "220101048.tab.c"
     break;
 
   case 100: /* NESTPARSER: %empty  */
-#line 964 "220101048.y"
+#line 966 "220101048.y"
         {   
             string newST = currentSymbolTable->name + "." + currentBlock + "$" + to_string(symbolTableCounter++);
             symbolTableInit* sym = currentSymbolTable->lookup(newST);
@@ -2446,11 +2448,11 @@ yyreduce:
             sym->symbolTableEntryType = new symbolTableData("block");
             currentSymbol = sym;
         }
-#line 2450 "220101048.tab.c"
+#line 2452 "220101048.tab.c"
     break;
 
   case 101: /* replaceActiveSymbolTableParse: %empty  */
-#line 976 "220101048.y"
+#line 978 "220101048.y"
         {   
             if(currentSymbol->nestedTable != NULL) {
                 replaceActiveSymbolTable(currentSymbol->nestedTable);
@@ -2460,119 +2462,119 @@ yyreduce:
                 replaceActiveSymbolTable(new SymbolTable(""));
             }
         }
-#line 2464 "220101048.tab.c"
+#line 2466 "220101048.tab.c"
     break;
 
   case 102: /* jump_statement: RETURN expression SEMICOLON  */
-#line 989 "220101048.y"
+#line 991 "220101048.y"
         {
             (yyval.stmt) = new Statement();
             emit("return", (yyvsp[-1].expr)->STaddress->name);
         }
-#line 2473 "220101048.tab.c"
+#line 2475 "220101048.tab.c"
     break;
 
   case 103: /* jump_statement: RETURN SEMICOLON  */
-#line 994 "220101048.y"
+#line 996 "220101048.y"
         {
             (yyval.stmt) = new Statement();
             emit("return", "");
         }
-#line 2482 "220101048.tab.c"
+#line 2484 "220101048.tab.c"
     break;
 
   case 104: /* translation_unit: external_declaration  */
-#line 1002 "220101048.y"
+#line 1004 "220101048.y"
         {}
-#line 2488 "220101048.tab.c"
+#line 2490 "220101048.tab.c"
     break;
 
   case 105: /* translation_unit: translation_unit external_declaration  */
-#line 1004 "220101048.y"
+#line 1006 "220101048.y"
         {}
-#line 2494 "220101048.tab.c"
+#line 2496 "220101048.tab.c"
     break;
 
   case 106: /* external_declaration: function_definition  */
-#line 1009 "220101048.y"
+#line 1011 "220101048.y"
         {}
-#line 2500 "220101048.tab.c"
+#line 2502 "220101048.tab.c"
     break;
 
   case 107: /* external_declaration: declaration  */
-#line 1011 "220101048.y"
+#line 1013 "220101048.y"
         {}
-#line 2506 "220101048.tab.c"
+#line 2508 "220101048.tab.c"
     break;
 
   case 108: /* function_definition: type_specifier declarator declaration_list_opt replaceActiveSymbolTableParse BEG block_item_list_opt END  */
-#line 1016 "220101048.y"
+#line 1018 "220101048.y"
         {   
             currentSymbolTable->parent = globalSymbolTable;
             symbolTableCounter = 0;
             replaceActiveSymbolTable(globalSymbolTable);
         }
-#line 2516 "220101048.tab.c"
+#line 2518 "220101048.tab.c"
     break;
 
   case 109: /* declaration_list: declaration  */
-#line 1026 "220101048.y"
+#line 1028 "220101048.y"
         {}
-#line 2522 "220101048.tab.c"
+#line 2524 "220101048.tab.c"
     break;
 
   case 110: /* declaration_list: declaration_list declaration  */
-#line 1028 "220101048.y"
+#line 1030 "220101048.y"
         {}
-#line 2528 "220101048.tab.c"
+#line 2530 "220101048.tab.c"
     break;
 
   case 111: /* argument_expression_list_opt: argument_expression_list  */
-#line 1034 "220101048.y"
+#line 1036 "220101048.y"
     {
         (yyval.numParams) = (yyvsp[0].numParams);
     }
-#line 2536 "220101048.tab.c"
+#line 2538 "220101048.tab.c"
     break;
 
   case 112: /* argument_expression_list_opt: %empty  */
-#line 1038 "220101048.y"
+#line 1040 "220101048.y"
     {
         (yyval.numParams) = 0;
     }
-#line 2544 "220101048.tab.c"
+#line 2546 "220101048.tab.c"
     break;
 
   case 113: /* block_item_list_opt: block_item_list  */
-#line 1045 "220101048.y"
+#line 1047 "220101048.y"
         {
             (yyval.stmt) = (yyvsp[0].stmt);
         }
-#line 2552 "220101048.tab.c"
+#line 2554 "220101048.tab.c"
     break;
 
   case 114: /* block_item_list_opt: %empty  */
-#line 1049 "220101048.y"
+#line 1051 "220101048.y"
         {
             (yyval.stmt) = new Statement();
         }
-#line 2560 "220101048.tab.c"
+#line 2562 "220101048.tab.c"
     break;
 
   case 115: /* declaration_list_opt: declaration_list  */
-#line 1055 "220101048.y"
+#line 1057 "220101048.y"
         {}
-#line 2566 "220101048.tab.c"
+#line 2568 "220101048.tab.c"
     break;
 
   case 116: /* declaration_list_opt: %empty  */
-#line 1057 "220101048.y"
+#line 1059 "220101048.y"
         {}
-#line 2572 "220101048.tab.c"
+#line 2574 "220101048.tab.c"
     break;
 
 
-#line 2576 "220101048.tab.c"
+#line 2578 "220101048.tab.c"
 
       default: break;
     }
@@ -2765,7 +2767,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 1061 "220101048.y"
+#line 1063 "220101048.y"
 
 
 void yyerror(string s) {

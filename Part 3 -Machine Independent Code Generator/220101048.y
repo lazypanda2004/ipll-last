@@ -150,7 +150,9 @@ primary_expression:
     | FLOAT_CONST
      {
         $$ = new Expression();
-        $$->STaddress = $1;
+        string val = to_string($1);
+        $$->STaddress = currentSymbolTable->gentemp(new symbolTableData("float"), val);
+        $$->STaddress->symbolTableEntryType->arrElementType = new symbolTableData("float");
     }
     ;
 
