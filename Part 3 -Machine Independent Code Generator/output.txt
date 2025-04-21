@@ -1,6 +1,3 @@
-ERROR -> syntax error
-Line: 1
-Can't Parse -> while <--
 
 
 0   :	add: 
@@ -25,6 +22,21 @@ Can't Parse -> while <--
 18  :	a = t5
 19  :	t8 = x + y
 20  :	z = t8
+21  :	t10 = 1
+22  :	if x <= t10 goto 25
+23  :	goto 33
+24  :	goto 
+
+25  :	main.WHILE$0: 
+26  :	t0 = 1
+27  :	t1 = x - t0
+28  :	x = t1
+29  :	t3 = 2
+30  :	Invalid operator
+31  :	z = t4
+32  :	goto 21
+33  :	t11 = 0
+34  :	return t11
 
 --------------------
 ST: Global              , Parent : NULL                
@@ -69,5 +81,20 @@ z                        int                      -                        4    
 t7                       unknown                  -                        -1             51             NULL
 t8                       int                      -                        4              50             NULL
 t9                       int                      -                        4              54             NULL
+t10                      int                      1                        4              58             NULL
+main.WHILE$0             block                    -                        4              62             main.WHILE$0
+t11                      int                      0                        4              66             NULL
+
+
+--------------------
+ST: main.WHILE$0        , Parent : main                
+--------------------
+name                     type                     initial value            size           offset         nested symbol table
+t0                       int                      1                        4              0              NULL
+t1                       int                      -                        4              4              NULL
+t2                       int                      -                        4              8              NULL
+t3                       int                      2                        4              12             NULL
+t4                       int                      -                        4              16             NULL
+t5                       int                      -                        4              20             NULL
 
 

@@ -941,7 +941,7 @@ selection_statement:
         ;
 
 iteration_statement: 
-        FOR F LEFT_PARENTHESIS NESTPARSER replaceActiveSymbolTableParse expression_statement A expression_statement A expression B RIGHT_PARENTHESIS A loop_statement
+        FOR F LEFT_PARENTHESIS NESTPARSER replaceActiveSymbolTableParse expression_statement A expression_statement A expression B RIGHT_PARENTHESIS A statement
         {
             $$ = new Statement();
             intToBoolConversion($8);
@@ -953,11 +953,42 @@ iteration_statement:
             currentBlock = "";
             replaceActiveSymbolTable(currentSymbolTable->parent);
         }
+        | WHILE W LEFT_PARENTHESIS A expression B RIGHT_PARENTHESIS A statement
+        {
+            $$ = new Statement();
+            intToBoolConversion($5);
+            backpatch($5->truelist, $8);
+            backpatch($9->nextlist, $4);
+            emit("goto", to_string($4));
+            $$->nextlist = $5->falselist;
+            currentBlock = "";
+        }
+        | DO D A statement WHILE LEFT_PARENTHESIS A expression B RIGHT_PARENTHESIS SEMICOLON
+        {
+            $$ = new Statement();
+            intToBoolConversion($8);
+            backpatch($4->nextlist, $7);    // After loop body execution, evaluate condition
+            backpatch($8->truelist, $3);    // If condition is true, go back to beginning of loop
+            $$->nextlist = $8->falselist;   // If condition is false, exit loop
+            currentBlock = "";
+        }
         ;
 
 F: %empty
         {   
             currentBlock = "FOR";
+        }
+        ;
+
+W: %empty
+        {   
+            currentBlock = "WHILE";
+        }
+        ;
+
+D: %empty
+        {   
+            currentBlock = "DO";
         }
         ;
 
@@ -1064,6 +1095,5 @@ declaration_list_opt:
 
 void yyerror(string s) {
     cout << "ERROR -> " << s << endl;
-    cout << "Line: " << yylineno << endl;
     cout << "Can't Parse -> " << yytext << " <--" << endl; 
 }
