@@ -1,161 +1,4 @@
 
-0   :	t0 = 10
-1   :	globalVar = t0
-2   :	pi = t1
-3   :	t2 = 'A'
-4   :	letter = t2
-
-5   :	add: 
-6   :	t0 = a + b
-7   :	return t0
-
-8   :	printArray: 
-9   :	t0 = 3
-10  :	a = t0
-
-11  :	createArray: 
-12  :	return arr
-
-13  :	main: 
-14  :	t0 = 5
-15  :	a = t0
-16  :	t1 = 10
-17  :	b = t1
-18  :	t2 = 'X'
-19  :	c = t2
-20  :	t3 = 0
-21  :	t4 = t3 * 4
-22  :	t5 = 42
-23  :	numbers[t4] = t5
-24  :	t7 = 2
-25  :	t8 = b * t7
-26  :	t9 = a + t8
-27  :	result = t9
-28  :	t11 = a + b
-29  :	t12 = 2
-30  :	t13 = t11 / t12
-31  :	result = t13
-32  :	t15 = a % b
-33  :	result = t15
-34  :	t17 = -a
-35  :	a = t17
-36  :	t19 = !b
-37  :	b = t19
-38  :	t21 = &a
-39  :	ptr = t21
-40  :	if a > b goto 43
-41  :	goto 48
-42  :	goto 52
-
-43  :	main.$0: 
-44  :	t0 = 1
-45  :	t1 = a + t0
-46  :	a = t1
-47  :	goto 52
-
-48  :	main.$1: 
-49  :	t0 = 1
-50  :	t1 = b - t0
-51  :	b = t1
-52  :	if a > b goto 55
-53  :	goto 56
-54  :	goto 60
-55  :	goto 58
-56  :	t22 = b
-57  :	goto 60
-58  :	t22 = a
-59  :	goto 60
-60  :	max = t22
-61  :	t23 = 0
-62  :	if a > t23 goto 64
-63  :	goto 72
-64  :	t24 = 20
-65  :	if b < t24 goto 68
-66  :	goto 72
-67  :	goto 72
-
-68  :	main.$2: 
-69  :	t0 = 0
-70  :	a = t0
-71  :	goto 72
-72  :	t25 = 0
-73  :	if a == t25 goto 79
-74  :	goto 75
-75  :	t26 = 0
-76  :	if b == t26 goto 79
-77  :	goto 83
-78  :	goto 83
-
-79  :	main.$3: 
-80  :	t0 = 0
-81  :	b = t0
-82  :	goto 83
-83  :	t27 = 10
-84  :	if a < t27 goto 87
-85  :	goto 92
-86  :	goto 
-
-87  :	main.WHILE$4: 
-88  :	t0 = 1
-89  :	t1 = a + t0
-90  :	a = t1
-91  :	goto 83
-
-92  :	main.DO$5: 
-93  :	t0 = 1
-94  :	t1 = b - t0
-95  :	b = t1
-96  :	t28 = 0
-97  :	if b > t28 goto 92
-98  :	goto 100
-99  :	goto 
-
-100 :	main.FOR$6: 
-101 :	t0 = 0
-102 :	a = t0
-103 :	t2 = 10
-104 :	if a < t2 goto 110
-105 :	goto 122
-106 :	t3 = 1
-107 :	t4 = a + t3
-108 :	a = t4
-109 :	goto 103
-
-110 :	main.FOR$6.FOR$7: 
-111 :	t0 = 5
-112 :	if a == t0 goto 115
-113 :	goto 116
-114 :	goto 116
-115 :	goto 116
-116 :	t1 = 8
-117 :	if a == t1 goto 120
-118 :	goto 106
-119 :	goto 121
-120 :	goto 106
-121 :	goto 106
-122 :	t29 = a & b
-123 :	bits = t29
-124 :	t30 = a | b
-125 :	bits = t30
-126 :	t32 = a ^ b
-127 :	bits = t32
-128 :	t34 = 2
-129 :	t35 = a << t34
-130 :	bits = t35
-131 :	t37 = 1
-132 :	t38 = b >> t37
-133 :	bits = t38
-134 :	param a
-135 :	param b
-136 :	t40 = call add, 2
-137 :	sum = t40
-138 :	t41 = 3
-139 :	h = t41
-140 :	param h
-141 :	t42 = 10
-142 :	param t42
-143 :	t43 = call printArray, 2
-
 --------------------
 ST: Global              , Parent : NULL                
 --------------------
@@ -227,45 +70,39 @@ t13                      int                      -                        4    
 t14                      float                    -                        8              77             NULL
 t15                      int                      -                        4              85             NULL
 t16                      float                    -                        8              89             NULL
-t17                      int                      -                        4              97             NULL
-t18                      int                      -                        4              101            NULL
-t19                      int                      -                        4              105            NULL
-t20                      int                      -                        4              109            NULL
-ptr                      ptr(int)                 -                        4              113            NULL
-t21                      ptr(int)                 -                        4              117            NULL
-main.$0                  block                    -                        4              121            main.$0
-main.$1                  block                    -                        4              125            main.$1
-max                      int                      -                        4              129            NULL
-t22                      int                      -                        4              133            NULL
-t23                      int                      0                        4              137            NULL
-t24                      int                      20                       4              141            NULL
-main.$2                  block                    -                        4              145            main.$2
-t25                      int                      0                        4              149            NULL
-t26                      int                      0                        4              153            NULL
-main.$3                  block                    -                        4              157            main.$3
-t27                      int                      10                       4              161            NULL
-main.WHILE$4             block                    -                        4              165            main.WHILE$4
-main.DO$5                block                    -                        4              169            main.DO$5
-t28                      int                      0                        4              173            NULL
-main.FOR$6               block                    -                        4              177            main.FOR$6
-bits                     int                      -                        4              181            NULL
-t29                      int                      -                        4              185            NULL
-t30                      int                      -                        4              189            NULL
-t31                      int                      -                        4              193            NULL
-t32                      int                      -                        4              197            NULL
-t33                      int                      -                        4              201            NULL
-t34                      int                      2                        4              205            NULL
+main.$0                  block                    -                        4              97             main.$0
+main.$1                  block                    -                        4              101            main.$1
+max                      int                      -                        4              105            NULL
+t17                      int                      -                        4              109            NULL
+t18                      int                      0                        4              113            NULL
+t19                      int                      20                       4              117            NULL
+main.$2                  block                    -                        4              121            main.$2
+t20                      int                      0                        4              125            NULL
+t21                      int                      0                        4              129            NULL
+main.$3                  block                    -                        4              133            main.$3
+t22                      int                      10                       4              137            NULL
+main.WHILE$4             block                    -                        4              141            main.WHILE$4
+main.DO$5                block                    -                        4              145            main.DO$5
+t23                      int                      0                        4              149            NULL
+main.FOR$6               block                    -                        4              153            main.FOR$6
+bits                     int                      -                        4              157            NULL
+t24                      int                      -                        4              161            NULL
+t25                      int                      -                        4              165            NULL
+t26                      int                      -                        4              169            NULL
+t27                      int                      -                        4              173            NULL
+t28                      int                      -                        4              177            NULL
+t29                      int                      2                        4              181            NULL
+t30                      int                      -                        4              185            NULL
+t31                      int                      -                        4              189            NULL
+t32                      int                      1                        4              193            NULL
+t33                      int                      -                        4              197            NULL
+t34                      int                      -                        4              201            NULL
+sum                      int                      -                        4              205            NULL
 t35                      int                      -                        4              209            NULL
-t36                      int                      -                        4              213            NULL
-t37                      int                      1                        4              217            NULL
-t38                      int                      -                        4              221            NULL
-t39                      int                      -                        4              225            NULL
-sum                      int                      -                        4              229            NULL
-t40                      int                      -                        4              233            NULL
-h                        int                      3                        4              237            NULL
-t41                      int                      3                        4              241            NULL
-t42                      int                      10                       4              245            NULL
-t43                      void                     -                        0              249            NULL
+h                        int                      3                        4              213            NULL
+t36                      int                      3                        4              217            NULL
+t37                      int                      10                       4              221            NULL
+t38                      void                     -                        0              225            NULL
 
 
 --------------------
@@ -342,4 +179,283 @@ continue                 int                      -                        4    
 t1                       int                      8                        4              8              NULL
 break                    int                      -                        4              12             NULL
 
+
+
+Op                  argument1           argument2           result              count               Code
+               --------------------------------------------------------------------------------------------------------------------------------------------
+=                   10                                      t0                  1                   	t0 = 10
+
+=                   t0                                      globalVar           2                   	globalVar = t0
+
+=                   t1                                      pi                  3                   	pi = t1
+
+=                   'A'                                     t2                  4                   	t2 = 'A'
+
+=                   t2                                      letter              5                   	letter = t2
+
+label                                                       add                 6                   add
+
++                   a                   b                   t0                  7                   	t0 = a + b
+
+return                                                      t0                  8                   	return t0
+
+label                                                       printArray          9                   printArray
+
+=                   3                                       t0                  10                  	t0 = 3
+
+=                   t0                                      a                   11                  	a = t0
+
+label                                                       createArray         12                  createArray
+
+return                                                      arr                 13                  	return arr
+
+label                                                       main                14                  main
+
+=                   5                                       t0                  15                  	t0 = 5
+
+=                   t0                                      a                   16                  	a = t0
+
+=                   10                                      t1                  17                  	t1 = 10
+
+=                   t1                                      b                   18                  	b = t1
+
+=                   'X'                                     t2                  19                  	t2 = 'X'
+
+=                   t2                                      c                   20                  	c = t2
+
+=                   0                                       t3                  21                  	t3 = 0
+
+*                   t3                  4                   t4                  22                  	t4 = t3 * 4
+
+=                   42                                      t5                  23                  	t5 = 42
+
+[]=                 t4                  t5                  numbers             24                  	numbers[t4] = t5
+
+=                   2                                       t7                  25                  	t7 = 2
+
+*                   b                   t7                  t8                  26                  	t8 = b * t7
+
++                   a                   t8                  t9                  27                  	t9 = a + t8
+
+=                   t9                                      result              28                  	result = t9
+
++                   a                   b                   t11                 29                  	t11 = a + b
+
+=                   2                                       t12                 30                  	t12 = 2
+
+/                   t11                 t12                 t13                 31                  	t13 = t11 / t12
+
+=                   t13                                     result              32                  	result = t13
+
+%                   a                   b                   t15                 33                  	t15 = a % b
+
+=                   t15                                     result              34                  	result = t15
+
+>                   a                   b                   37                  35                  	if a > b goto 37
+
+goto                                                        42                  36                  	goto 42
+
+goto                                                        46                  37                  	goto 46
+
+label                                                       main.$0             38                  main.$0
+
+=                   1                                       t0                  39                  	t0 = 1
+
++                   a                   t0                  t1                  40                  	t1 = a + t0
+
+=                   t1                                      a                   41                  	a = t1
+
+goto                                                        46                  42                  	goto 46
+
+label                                                       main.$1             43                  main.$1
+
+=                   1                                       t0                  44                  	t0 = 1
+
+-                   b                   t0                  t1                  45                  	t1 = b - t0
+
+=                   t1                                      b                   46                  	b = t1
+
+>                   a                   b                   49                  47                  	if a > b goto 49
+
+goto                                                        50                  48                  	goto 50
+
+goto                                                        54                  49                  	goto 54
+
+goto                                                        52                  50                  	goto 52
+
+=                   b                                       t17                 51                  	t17 = b
+
+goto                                                        54                  52                  	goto 54
+
+=                   a                                       t17                 53                  	t17 = a
+
+goto                                                        54                  54                  	goto 54
+
+=                   t17                                     max                 55                  	max = t17
+
+=                   0                                       t18                 56                  	t18 = 0
+
+>                   a                   t18                 58                  57                  	if a > t18 goto 58
+
+goto                                                        66                  58                  	goto 66
+
+=                   20                                      t19                 59                  	t19 = 20
+
+<                   b                   t19                 62                  60                  	if b < t19 goto 62
+
+goto                                                        66                  61                  	goto 66
+
+goto                                                        66                  62                  	goto 66
+
+label                                                       main.$2             63                  main.$2
+
+=                   0                                       t0                  64                  	t0 = 0
+
+=                   t0                                      a                   65                  	a = t0
+
+goto                                                        66                  66                  	goto 66
+
+=                   0                                       t20                 67                  	t20 = 0
+
+==                  a                   t20                 73                  68                  	if a == t20 goto 73
+
+goto                                                        69                  69                  	goto 69
+
+=                   0                                       t21                 70                  	t21 = 0
+
+==                  b                   t21                 73                  71                  	if b == t21 goto 73
+
+goto                                                        77                  72                  	goto 77
+
+goto                                                        77                  73                  	goto 77
+
+label                                                       main.$3             74                  main.$3
+
+=                   0                                       t0                  75                  	t0 = 0
+
+=                   t0                                      b                   76                  	b = t0
+
+goto                                                        77                  77                  	goto 77
+
+=                   10                                      t22                 78                  	t22 = 10
+
+<                   a                   t22                 81                  79                  	if a < t22 goto 81
+
+goto                                                        86                  80                  	goto 86
+
+goto                                                                            81                  	goto 
+
+label                                                       main.WHILE$4        82                  main.WHILE$4
+
+=                   1                                       t0                  83                  	t0 = 1
+
++                   a                   t0                  t1                  84                  	t1 = a + t0
+
+=                   t1                                      a                   85                  	a = t1
+
+goto                                                        77                  86                  	goto 77
+
+label                                                       main.DO$5           87                  main.DO$5
+
+=                   1                                       t0                  88                  	t0 = 1
+
+-                   b                   t0                  t1                  89                  	t1 = b - t0
+
+=                   t1                                      b                   90                  	b = t1
+
+=                   0                                       t23                 91                  	t23 = 0
+
+>                   b                   t23                 86                  92                  	if b > t23 goto 86
+
+goto                                                        94                  93                  	goto 94
+
+goto                                                                            94                  	goto 
+
+label                                                       main.FOR$6          95                  main.FOR$6
+
+=                   0                                       t0                  96                  	t0 = 0
+
+=                   t0                                      a                   97                  	a = t0
+
+=                   10                                      t2                  98                  	t2 = 10
+
+<                   a                   t2                  104                 99                  	if a < t2 goto 104
+
+goto                                                        116                 100                 	goto 116
+
+=                   1                                       t3                  101                 	t3 = 1
+
++                   a                   t3                  t4                  102                 	t4 = a + t3
+
+=                   t4                                      a                   103                 	a = t4
+
+goto                                                        97                  104                 	goto 97
+
+label                                                       main.FOR$6.FOR$7    105                 main.FOR$6.FOR$7
+
+=                   5                                       t0                  106                 	t0 = 5
+
+==                  a                   t0                  109                 107                 	if a == t0 goto 109
+
+goto                                                        110                 108                 	goto 110
+
+goto                                                        110                 109                 	goto 110
+
+goto                                                        110                 110                 	goto 110
+
+=                   8                                       t1                  111                 	t1 = 8
+
+==                  a                   t1                  114                 112                 	if a == t1 goto 114
+
+goto                                                        100                 113                 	goto 100
+
+goto                                                        115                 114                 	goto 115
+
+goto                                                        100                 115                 	goto 100
+
+goto                                                        100                 116                 	goto 100
+
+&                   a                   b                   t24                 117                 	t24 = a & b
+
+=                   t24                                     bits                118                 	bits = t24
+
+|                   a                   b                   t25                 119                 	t25 = a | b
+
+=                   t25                                     bits                120                 	bits = t25
+
+^                   a                   b                   t27                 121                 	t27 = a ^ b
+
+=                   t27                                     bits                122                 	bits = t27
+
+=                   2                                       t29                 123                 	t29 = 2
+
+<<                  a                   t29                 t30                 124                 	t30 = a << t29
+
+=                   t30                                     bits                125                 	bits = t30
+
+=                   1                                       t32                 126                 	t32 = 1
+
+>>                  b                   t32                 t33                 127                 	t33 = b >> t32
+
+=                   t33                                     bits                128                 	bits = t33
+
+param                                                       a                   129                 	param a
+
+param                                                       b                   130                 	param b
+
+call                add                 2                   t35                 131                 	t35 = call add, 2
+
+=                   t35                                     sum                 132                 	sum = t35
+
+=                   3                                       t36                 133                 	t36 = 3
+
+=                   t36                                     h                   134                 	h = t36
+
+param                                                       h                   135                 	param h
+
+=                   10                                      t37                 136                 	t37 = 10
+
+param                                                       t37                 137                 	param t37
+
+call                printArray          2                   t38                 138                 	t38 = call printArray, 2
 

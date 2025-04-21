@@ -1,4 +1,3 @@
-#include <map>
 #include <iomanip>
 #include <bits/stdc++.h>
 using namespace std;
@@ -85,7 +84,7 @@ public:
     string result;
     Quad(string res, string arg1_, string operation = "=", string arg2_ = "");
     Quad(string res, int arg1_, string operation = "=", string arg2_ = "");
-    int print_quad();
+    int print_quad(int count);
 };
 
 class quadArray
@@ -321,44 +320,44 @@ Quad::Quad(string res, int arg1_, string operation, string arg2_) : result(res),
     arg1 = to_string(arg1_);
 }
 
-int Quad::print_quad()
+int Quad::print_quad(int count)
 {
-    string pRemover = "";
-    if (op != "=")
-    {
-        if (op != "=[]")
-        {
-            if (op != "*=")
-            {
-                if (op != "[]=")
-                {
-                    if (op == "goto" || op == "param" || op == "return")
-                        pRemover = op + " " + result;
-                    else if (op == "call")
-                        pRemover = result + " = " + "call " + arg1 + ", " + arg2;
-                    else if (op == "label")
-                        pRemover = result + ": ";
-                    else if (op == "= &" || op == "= *" || op == "= -" || op == "= !")
-                        pRemover = result + " " + op + arg1;
-                    else if (op == "+" || op == "-" || op == "*" || op == "/" || op == "%" || op == "|" || op == "&" || op == "<<" || op == ">>" || op == "^" )
-                        pRemover = result + " = " + arg1 + " " + op + " " + arg2;
-                    else if (op == "==" || op == "!=" || op == "<" || op == ">" || op == "<=" || op == ">=")
-                        pRemover = "if " + arg1 + " " + op + " " + arg2 + " goto " + result;
-                    else
-                        pRemover = "Invalid operator";
-                }
-                else
-                    pRemover = result + "[" + arg1 + "]" + " = " + arg2;
-            }
-            else
-                pRemover = "*" + result + " = " + arg1;
-        }
-        else
-            pRemover = result + " = " + arg1 + "[" + arg2 + "]";
+    cout << setw(20) << op << setw(20) << arg1 << setw(20)
+         << arg2 << setw(20) << result << setw(20) << count; ;
+    if (op == "=") {
+        cout << "\t" << result << " = " << arg1 << endl;
+    } else if (op == "goto") {
+        cout << "\tgoto " << result << endl;
+    } else if (op == "return") {
+        cout << "\treturn " << result << endl;
+    } else if (op == "call") {
+        cout << "\t" << result << " = call " << arg1 << ", " << arg2 << endl;
+    } else if (op == "param") {
+        cout << "\tparam " << result << endl;
+    } else if (op == "label") {
+        cout << result << endl;
+    } else if (op == "=[]") {
+        cout << "\t" << result << " = " << arg1 << "[" << arg2 << "]" << endl;
+    } else if (op == "[]=") {
+        cout << "\t" << result << "[" << arg1 << "] = " << arg2 << endl;
+    } else if (op == "+" || op == "-" || op == "*" || op == "/" || op == "%" || op == "<<" || op == ">>") {
+        cout << "\t" << result << " = " << arg1 << " " << op << " " << arg2 << endl;
+    } else if (op == "&" || op == "|" || op == "^" ) {
+        cout << "\t" << result << " = " << arg1 << " " << op << " " << arg2 << endl;
+    } else if (op == "==" || op == "!=" || op == "<" || op == ">" || op == "<=" || op == ">=" ) {
+        cout << "\tif " << arg1 << " " << op << " " << arg2 << " goto " << result << endl;
+    } else if (op == "=&" || op == "=*") {
+        cout << "\t" << result << " " << op[0] << " " << op[1] << arg1 << endl;
+    } else if (op == "*=") {
+        cout << "\t*" << result << " = " << arg1 << endl;
+    } else if (op == "=-") {
+        cout << "\t" << result << " = - " << arg1 << endl;
+    } else if (op == "!") {
+        cout << "\t" << result << " = ! " << arg1 << endl;
+    } else {
+        cout << op << arg1 << arg2 << result << endl;
+        cout << "INVALID OPERATOR\n";
     }
-    else
-        pRemover = result + " = " + arg1;
-    cout << pRemover;
     return 1;
 }
 
@@ -366,20 +365,22 @@ void quadArray::printQuadArray()
 {
     cout << "\n";
 
-    int count = 0;
+    cout<<setw(20)<<"Op"<<setw(20)<<"argument1"<<setw(20)<<"argument2"<<setw(20)<<"result"<<setw(20)<<"count"<<setw(20)<<"Code\n";
+    cout<<setw(0) << string(140, '-') << endl; 
+
+    int count = 1;
     auto it = this->quads.begin();
     while (it != this->quads.end())
     {
         if (it->op != "label")
         {
-            cout << left << setw(4) << count << ":\t";
-            it->print_quad();
+            cout << setw(20);
+            it->print_quad(count);
         }
         else
         {
-            cout << "\n"
-                 << left << setw(4) << count << ":\t";
-            it->print_quad();
+            cout << setw(20);
+            it->print_quad(count);
         }
         cout << endl;
         it++;
@@ -605,9 +606,9 @@ int main()
 
     yyparse();
     globalSymbolTable->update();
-    quadrupleArray.print();
+    
     cout << "\n";
     globalSymbolTable->print();
-
+    quadrupleArray.print();
     return 0;
 }

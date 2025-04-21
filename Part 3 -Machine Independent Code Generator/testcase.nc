@@ -44,13 +44,6 @@ begin
     result = (a + b) / 2;
     result = a % b;
 
-    // Unary operations
-    a = -a;
-    b = !b;
-
-    // Pointer
-    integer* ptr = &a;
-
     // Conditional statements
     if (a > b)
     begin
