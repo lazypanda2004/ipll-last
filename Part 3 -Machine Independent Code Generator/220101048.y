@@ -873,19 +873,8 @@ loop_statement:
         }
         ;
 
-change_block:
-        {
-            string name = currentSymbolTable->name + "_" + to_string(symbolTableCounter);
-            symbolTableCounter++;
-            symbolTableInit* s = currentSymbolTable->lookup(name); // create new entry in symbol table
-            s->nestedTable = new SymbolTable(name,"block",currentSymbolTable);
-            s->type = new symbolTableData("block");
-            currentSymbol = s;
-        }
-        ;
-
 compound_statement: 
-        BEG change_block replaceActiveSymbolTableParse block_item_list_opt END
+        BEG NESTPARSER replaceActiveSymbolTableParse block_item_list_opt END
         {
             $$ = $4;
             replaceActiveSymbolTable(currentSymbolTable->parent);
