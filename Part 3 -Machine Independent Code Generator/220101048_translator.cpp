@@ -1,9 +1,5 @@
 #include <map>
 #include <iomanip>
-#include <iostream>
-#include <vector>
-#include <list>
-#include <string>
 #include <bits/stdc++.h>
 using namespace std;
 

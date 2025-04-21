@@ -1166,6 +1166,7 @@ external_declaration:
 function_definition: 
         type_specifier declarator declaration_list_opt replaceActiveSymbolTableParse BEG block_item_list_opt END
         {   
+
             currentSymbolTable->parent = globalSymbolTable;
             symbolTableCounter = 0;
             replaceActiveSymbolTable(globalSymbolTable);

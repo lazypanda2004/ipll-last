@@ -1,0 +1,345 @@
+
+0   :	t0 = 10
+1   :	globalVar = t0
+2   :	pi = t1
+3   :	t2 = 'A'
+4   :	letter = t2
+
+5   :	add: 
+6   :	t0 = a + b
+7   :	return t0
+
+8   :	printArray: 
+9   :	t0 = 3
+10  :	a = t0
+
+11  :	createArray: 
+12  :	return arr
+
+13  :	main: 
+14  :	t0 = 5
+15  :	a = t0
+16  :	t1 = 10
+17  :	b = t1
+18  :	t2 = 'X'
+19  :	c = t2
+20  :	t3 = 0
+21  :	t4 = t3 * 4
+22  :	t5 = 42
+23  :	numbers[t4] = t5
+24  :	t7 = 2
+25  :	t8 = b * t7
+26  :	t9 = a + t8
+27  :	result = t9
+28  :	t11 = a + b
+29  :	t12 = 2
+30  :	t13 = t11 / t12
+31  :	result = t13
+32  :	t15 = a % b
+33  :	result = t15
+34  :	t17 = -a
+35  :	a = t17
+36  :	t19 = !b
+37  :	b = t19
+38  :	t21 = &a
+39  :	ptr = t21
+40  :	if a > b goto 43
+41  :	goto 48
+42  :	goto 52
+
+43  :	main.$0: 
+44  :	t0 = 1
+45  :	t1 = a + t0
+46  :	a = t1
+47  :	goto 52
+
+48  :	main.$1: 
+49  :	t0 = 1
+50  :	t1 = b - t0
+51  :	b = t1
+52  :	if a > b goto 55
+53  :	goto 56
+54  :	goto 60
+55  :	goto 58
+56  :	t22 = b
+57  :	goto 60
+58  :	t22 = a
+59  :	goto 60
+60  :	max = t22
+61  :	t23 = 0
+62  :	if a > t23 goto 64
+63  :	goto 72
+64  :	t24 = 20
+65  :	if b < t24 goto 68
+66  :	goto 72
+67  :	goto 72
+
+68  :	main.$2: 
+69  :	t0 = 0
+70  :	a = t0
+71  :	goto 72
+72  :	t25 = 0
+73  :	if a == t25 goto 79
+74  :	goto 75
+75  :	t26 = 0
+76  :	if b == t26 goto 79
+77  :	goto 83
+78  :	goto 83
+
+79  :	main.$3: 
+80  :	t0 = 0
+81  :	b = t0
+82  :	goto 83
+83  :	t27 = 10
+84  :	if a < t27 goto 87
+85  :	goto 92
+86  :	goto 
+
+87  :	main.WHILE$4: 
+88  :	t0 = 1
+89  :	t1 = a + t0
+90  :	a = t1
+91  :	goto 83
+
+92  :	main.DO$5: 
+93  :	t0 = 1
+94  :	t1 = b - t0
+95  :	b = t1
+96  :	t28 = 0
+97  :	if b > t28 goto 92
+98  :	goto 100
+99  :	goto 
+
+100 :	main.FOR$6: 
+101 :	t0 = 0
+102 :	a = t0
+103 :	t2 = 10
+104 :	if a < t2 goto 110
+105 :	goto 122
+106 :	t3 = 1
+107 :	t4 = a + t3
+108 :	a = t4
+109 :	goto 103
+
+110 :	main.FOR$6.FOR$7: 
+111 :	t0 = 5
+112 :	if a == t0 goto 115
+113 :	goto 116
+114 :	goto 116
+115 :	goto 116
+116 :	t1 = 8
+117 :	if a == t1 goto 120
+118 :	goto 106
+119 :	goto 121
+120 :	goto 106
+121 :	goto 106
+122 :	t29 = a & b
+123 :	bits = t29
+124 :	t30 = a | b
+125 :	bits = t30
+126 :	t32 = a ^ b
+127 :	bits = t32
+128 :	t34 = 2
+129 :	t35 = a << t34
+130 :	bits = t35
+131 :	t37 = 1
+132 :	t38 = b >> t37
+133 :	bits = t38
+134 :	param a
+135 :	param b
+136 :	t40 = call add, 2
+137 :	sum = t40
+138 :	t41 = 3
+139 :	h = t41
+140 :	param h
+141 :	t42 = 10
+142 :	param t42
+143 :	t43 = call printArray, 2
+
+--------------------
+ST: Global              , Parent : NULL                
+--------------------
+name                     type                     initial value            size           offset         nested symbol table
+globalVar                int                      10                       4              0              NULL
+t0                       int                      10                       4              4              NULL
+pi                       float                    3.141590                 8              8              NULL
+t1                       float                    3.141590                 8              16             NULL
+letter                   char                     'A'                      1              24             NULL
+t2                       char                     'A'                      1              25             NULL
+add                      int                      -                        4              26             add
+printArray               void                     -                        0              30             printArray
+createArray              ptr(int)                 -                        4              30             createArray
+main                     int                      -                        4              34             main
+
+
+--------------------
+ST: add                 , Parent : Global              
+--------------------
+name                     type                     initial value            size           offset         nested symbol table
+a                        int                      -                        4              0              NULL
+b                        int                      -                        4              4              NULL
+return                   int                      -                        4              8              NULL
+t0                       int                      -                        4              12             NULL
+
+
+--------------------
+ST: printArray          , Parent : Global              
+--------------------
+name                     type                     initial value            size           offset         nested symbol table
+a                        int                      -                        4              0              NULL
+t0                       int                      3                        4              4              NULL
+t1                       int                      -                        4              8              NULL
+
+
+--------------------
+ST: createArray         , Parent : Global              
+--------------------
+name                     type                     initial value            size           offset         nested symbol table
+size                     int                      -                        4              0              NULL
+return                   int                      -                        4              4              NULL
+arr                      ptr(int)                 -                        4              8              NULL
+
+
+--------------------
+ST: main                , Parent : Global              
+--------------------
+name                     type                     initial value            size           offset         nested symbol table
+return                   int                      -                        4              0              NULL
+a                        int                      5                        4              4              NULL
+t0                       int                      5                        4              8              NULL
+b                        int                      10                       4              12             NULL
+t1                       int                      10                       4              16             NULL
+result                   float                    -                        8              20             NULL
+c                        char                     'X'                      1              28             NULL
+t2                       char                     'X'                      1              29             NULL
+numbers                  arr(10, int)             -                        -1             30             NULL
+t3                       int                      0                        4              29             NULL
+t4                       int                      -                        4              33             NULL
+t5                       int                      42                       4              37             NULL
+t6                       int                      -                        4              41             NULL
+t7                       int                      2                        4              45             NULL
+t8                       int                      -                        4              49             NULL
+t9                       int                      -                        4              53             NULL
+t10                      float                    -                        8              57             NULL
+t11                      int                      -                        4              65             NULL
+t12                      int                      2                        4              69             NULL
+t13                      int                      -                        4              73             NULL
+t14                      float                    -                        8              77             NULL
+t15                      int                      -                        4              85             NULL
+t16                      float                    -                        8              89             NULL
+t17                      int                      -                        4              97             NULL
+t18                      int                      -                        4              101            NULL
+t19                      int                      -                        4              105            NULL
+t20                      int                      -                        4              109            NULL
+ptr                      ptr(int)                 -                        4              113            NULL
+t21                      ptr(int)                 -                        4              117            NULL
+main.$0                  block                    -                        4              121            main.$0
+main.$1                  block                    -                        4              125            main.$1
+max                      int                      -                        4              129            NULL
+t22                      int                      -                        4              133            NULL
+t23                      int                      0                        4              137            NULL
+t24                      int                      20                       4              141            NULL
+main.$2                  block                    -                        4              145            main.$2
+t25                      int                      0                        4              149            NULL
+t26                      int                      0                        4              153            NULL
+main.$3                  block                    -                        4              157            main.$3
+t27                      int                      10                       4              161            NULL
+main.WHILE$4             block                    -                        4              165            main.WHILE$4
+main.DO$5                block                    -                        4              169            main.DO$5
+t28                      int                      0                        4              173            NULL
+main.FOR$6               block                    -                        4              177            main.FOR$6
+bits                     int                      -                        4              181            NULL
+t29                      int                      -                        4              185            NULL
+t30                      int                      -                        4              189            NULL
+t31                      int                      -                        4              193            NULL
+t32                      int                      -                        4              197            NULL
+t33                      int                      -                        4              201            NULL
+t34                      int                      2                        4              205            NULL
+t35                      int                      -                        4              209            NULL
+t36                      int                      -                        4              213            NULL
+t37                      int                      1                        4              217            NULL
+t38                      int                      -                        4              221            NULL
+t39                      int                      -                        4              225            NULL
+sum                      int                      -                        4              229            NULL
+t40                      int                      -                        4              233            NULL
+h                        int                      3                        4              237            NULL
+t41                      int                      3                        4              241            NULL
+t42                      int                      10                       4              245            NULL
+t43                      void                     -                        0              249            NULL
+
+
+--------------------
+ST: main.$0             , Parent : main                
+--------------------
+name                     type                     initial value            size           offset         nested symbol table
+t0                       int                      1                        4              0              NULL
+t1                       int                      -                        4              4              NULL
+t2                       int                      -                        4              8              NULL
+
+
+--------------------
+ST: main.$1             , Parent : main                
+--------------------
+name                     type                     initial value            size           offset         nested symbol table
+t0                       int                      1                        4              0              NULL
+t1                       int                      -                        4              4              NULL
+t2                       int                      -                        4              8              NULL
+
+
+--------------------
+ST: main.$2             , Parent : main                
+--------------------
+name                     type                     initial value            size           offset         nested symbol table
+t0                       int                      0                        4              0              NULL
+t1                       int                      -                        4              4              NULL
+
+
+--------------------
+ST: main.$3             , Parent : main                
+--------------------
+name                     type                     initial value            size           offset         nested symbol table
+t0                       int                      0                        4              0              NULL
+t1                       int                      -                        4              4              NULL
+
+
+--------------------
+ST: main.WHILE$4        , Parent : main                
+--------------------
+name                     type                     initial value            size           offset         nested symbol table
+t0                       int                      1                        4              0              NULL
+t1                       int                      -                        4              4              NULL
+t2                       int                      -                        4              8              NULL
+
+
+--------------------
+ST: main.DO$5           , Parent : main                
+--------------------
+name                     type                     initial value            size           offset         nested symbol table
+t0                       int                      1                        4              0              NULL
+t1                       int                      -                        4              4              NULL
+t2                       int                      -                        4              8              NULL
+
+
+--------------------
+ST: main.FOR$6          , Parent : main                
+--------------------
+name                     type                     initial value            size           offset         nested symbol table
+t0                       int                      0                        4              0              NULL
+t1                       int                      -                        4              4              NULL
+t2                       int                      10                       4              8              NULL
+t3                       int                      1                        4              12             NULL
+t4                       int                      -                        4              16             NULL
+t5                       int                      -                        4              20             NULL
+main.FOR$6.FOR$7         block                    -                        4              24             main.FOR$6.FOR$7
+
+
+--------------------
+ST: main.FOR$6.FOR$7    , Parent : main.FOR$6          
+--------------------
+name                     type                     initial value            size           offset         nested symbol table
+t0                       int                      5                        4              0              NULL
+continue                 int                      -                        4              4              NULL
+t1                       int                      8                        4              8              NULL
+break                    int                      -                        4              12             NULL
+
+

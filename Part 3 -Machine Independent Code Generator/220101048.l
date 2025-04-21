@@ -293,7 +293,6 @@ RSHIFT                          ">>"
 {FLOAT_CONST}                    {yylval.floatVal = atof(yytext); return FLOAT_CONST;}
 
 {WS}                            {}
-"\n"                            {}
 
 
 
