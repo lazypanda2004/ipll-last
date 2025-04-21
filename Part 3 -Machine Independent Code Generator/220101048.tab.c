@@ -753,8 +753,8 @@ static const yytype_int16 yyrline[] =
      905,   917,   932,   939,   941,   946,   955,   960,   962,   967,
      974,   978,   983,   987,   991,   998,  1007,  1011,  1019,  1023,
     1030,  1034,  1041,  1050,  1063,  1075,  1085,  1096,  1102,  1108,
-    1115,  1127,  1140,  1145,  1153,  1155,  1160,  1162,  1167,  1177,
-    1179,  1185,  1189,  1196,  1200,  1206,  1208
+    1115,  1127,  1140,  1145,  1153,  1155,  1160,  1162,  1167,  1181,
+    1183,  1189,  1193,  1200,  1204,  1210,  1212
 };
 #endif
 
@@ -2671,69 +2671,73 @@ yyreduce:
         {   
             currentSymbolTable->parent = globalSymbolTable;
             symbolTableCounter = 0;
+            if((yyvsp[-5].symptr)->symbolTableEntryType->type != "void") {
+                symbolTableInit* s = currentSymbolTable->lookup("return");
+                s->update_symbol((yyvsp[-5].symptr)->symbolTableEntryType);
+            }
             replaceActiveSymbolTable(globalSymbolTable);
         }
-#line 2677 "220101048.tab.c"
+#line 2681 "220101048.tab.c"
     break;
 
   case 109: /* declaration_list: declaration  */
-#line 1178 "220101048.y"
+#line 1182 "220101048.y"
         {}
-#line 2683 "220101048.tab.c"
+#line 2687 "220101048.tab.c"
     break;
 
   case 110: /* declaration_list: declaration_list declaration  */
-#line 1180 "220101048.y"
+#line 1184 "220101048.y"
         {}
-#line 2689 "220101048.tab.c"
+#line 2693 "220101048.tab.c"
     break;
 
   case 111: /* argument_expression_list_opt: argument_expression_list  */
-#line 1186 "220101048.y"
+#line 1190 "220101048.y"
     {
         (yyval.numParams) = (yyvsp[0].numParams);
     }
-#line 2697 "220101048.tab.c"
+#line 2701 "220101048.tab.c"
     break;
 
   case 112: /* argument_expression_list_opt: %empty  */
-#line 1190 "220101048.y"
+#line 1194 "220101048.y"
     {
         (yyval.numParams) = 0;
     }
-#line 2705 "220101048.tab.c"
+#line 2709 "220101048.tab.c"
     break;
 
   case 113: /* block_item_list_opt: block_item_list  */
-#line 1197 "220101048.y"
+#line 1201 "220101048.y"
         {
             (yyval.stmt) = (yyvsp[0].stmt);
         }
-#line 2713 "220101048.tab.c"
+#line 2717 "220101048.tab.c"
     break;
 
   case 114: /* block_item_list_opt: %empty  */
-#line 1201 "220101048.y"
+#line 1205 "220101048.y"
         {
             (yyval.stmt) = new Statement();
         }
-#line 2721 "220101048.tab.c"
+#line 2725 "220101048.tab.c"
     break;
 
   case 115: /* declaration_list_opt: declaration_list  */
-#line 1207 "220101048.y"
+#line 1211 "220101048.y"
         {}
-#line 2727 "220101048.tab.c"
+#line 2731 "220101048.tab.c"
     break;
 
   case 116: /* declaration_list_opt: %empty  */
-#line 1209 "220101048.y"
+#line 1213 "220101048.y"
         {}
-#line 2733 "220101048.tab.c"
+#line 2737 "220101048.tab.c"
     break;
 
 
-#line 2737 "220101048.tab.c"
+#line 2741 "220101048.tab.c"
 
       default: break;
     }
@@ -2926,7 +2930,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 1213 "220101048.y"
+#line 1217 "220101048.y"
 
 
 void yyerror(string s) {

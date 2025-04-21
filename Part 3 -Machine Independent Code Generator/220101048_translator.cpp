@@ -12,6 +12,7 @@ using namespace std;
 #define _SIZE_INT 4
 #define _SIZE_POINTER 4
 #define _SIZE_FUNCTION 0
+#define _SIZE_FLOAT 8
 
 class symbolTableInit;
 class symbolTableData;
@@ -316,6 +317,7 @@ void SymbolTable::update()
     }
 }
 
+
 Quad::Quad(string res, string arg1_, string operation, string arg2_) : result(res), arg1(arg1_), op(operation), arg2(arg2_) {}
 
 Quad::Quad(string res, int arg1_, string operation, string arg2_) : result(res), op(operation), arg2(arg2_)
@@ -342,7 +344,7 @@ int Quad::print_quad()
                         pRemover = result + ": ";
                     else if (op == "= &" || op == "= *" || op == "= -" || op == "= !")
                         pRemover = result + " " + op + arg1;
-                    else if (op == "+" || op == "-" || op == "*" || op == "/" || op == "%" || op == "|" || op == "&")
+                    else if (op == "+" || op == "-" || op == "*" || op == "/" || op == "%" || op == "|" || op == "&" || op == "<<" || op == ">>" || op == "^" )
                         pRemover = result + " = " + arg1 + " " + op + " " + arg2;
                     else if (op == "==" || op == "!=" || op == "<" || op == ">" || op == "<=" || op == ">=")
                         pRemover = "if " + arg1 + " " + op + " " + arg2 + " goto " + result;
@@ -459,7 +461,7 @@ int typecheck(symbolTableData *t1, symbolTableData *t2)
 
 string getTypeDescription(symbolTableData *type_)
 {
-    if (type_->type == "void" || type_->type == "char" || type_->type == "int" || type_->type == "block" || type_->type == "func")
+    if (type_->type == "void" || type_->type == "char" || type_->type == "int" || type_->type == "block" || type_->type == "func" || type_->type == "float")
         return type_->type;
     else if (type_->type == "ptr")
         return "ptr(" + getSymbolTableDataDescription(type_->arrElementType) + ")";
@@ -531,7 +533,9 @@ int getSize(symbolTableData *t)
         ty = 3;
     if (t->type == "func")
         ty = 4;
-
+    if (t->type == "float")
+        ty = 5;
+    
     int ret = -1;
 
     switch (ty)
@@ -554,6 +558,9 @@ int getSize(symbolTableData *t)
 
     case 4:
         ret = _SIZE_FUNCTION;
+        break;
+    case 5:
+        ret = _SIZE_FLOAT;
         break;
 
     default:
